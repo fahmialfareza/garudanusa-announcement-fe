@@ -1,95 +1,64 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import PassStatusCheck from "@/components/PassStatusCheck";
+import {
+  ActionIcon,
+  Box,
+  Card,
+  Center,
+  Flex,
+  Grid,
+  Image,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { IconUserCircle } from "@tabler/icons-react";
+import dayjs from "dayjs";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Box h="screen">
+      <Grid>
+        <Grid.Col span={6} h="100vh">
+          <Image src="/assets/hero.png" alt="hero" h={"100%"} />
+        </Grid.Col>
+        <Grid.Col span={6} pr={24} pt={24}>
+          <Stack gap={48} justify="center" align="stretch" h={"100%"}>
+            <Flex justify="space-between" w="100%" mb={24}>
+              <Text size="xl" c="brand.9">
+                GARUDA NUSA
+              </Text>
+              <ActionIcon variant="transparent" color="brand.9">
+                <IconUserCircle />
+              </ActionIcon>
+            </Flex>
+            <Flex h="70%">
+              <Card p={28} withBorder w="100%" radius="lg">
+                <Stack
+                  w="100%"
+                  h="100%"
+                  justify="center"
+                  align="center"
+                  gap={40}
+                  my={48}
+                >
+                  <Image src="/assets/logo.png" alt="logo" maw={480} />
+                  <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
+                    PENGUMUMAN SELEKSI BERKAS GARUDA NUSA YOUTH SUMMIT
+                  </Text>
+                  <PassStatusCheck />
+                </Stack>
+              </Card>
+            </Flex>
+            <Center>
+              <Text maw={400} ta="center" fw="bold" color="brand.9">
+                GARUDA NUSA YOUTH ACTION (GNYA) #9 LABUAN BAJOPENGUMUMAN SELEKSI
+                SUBSTANSI © {dayjs().format("YYYY")}
+              </Text>
+            </Center>
+          </Stack>
+        </Grid.Col>
+      </Grid>
+    </Box>
   );
 }
