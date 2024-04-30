@@ -1,0 +1,150 @@
+"use client";
+
+import { Link } from "@/libs/router-event";
+import {
+  AppShell,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Group,
+  Image,
+  Stack,
+  UnstyledButton,
+} from "@mantine/core";
+import "@mantine/core/styles.css";
+import { useDisclosure } from "@mantine/hooks";
+import {
+  IconDiscountCheck,
+  IconFileDescription,
+  IconFileUpload,
+  IconLogout2,
+  IconReportAnalytics,
+  IconSettings,
+  IconUserCircle,
+  IconUserPlus,
+} from "@tabler/icons-react";
+
+import { usePathname } from "next/navigation";
+
+import React from "react";
+interface NavLink {
+  label: string;
+  path: string;
+  icon?: any;
+}
+
+const navLinks: NavLink[] = [
+  {
+    label: "Pengaturan Profil",
+    path: "/admin/profile",
+    icon: <IconSettings />,
+  },
+  {
+    label: "Data Pendaftar",
+    path: "/admin/data-pendaftar",
+    icon: <IconFileDescription />,
+  },
+  {
+    label: "Upload Data",
+    path: "/admin/upload-data",
+    icon: <IconFileUpload />,
+  },
+  {
+    label: "Pengelola",
+    path: "/admin/pengelola",
+    icon: <IconUserPlus />,
+  },
+  {
+    label: "Cek Kelolosan",
+    path: "/admin/cek-kelolosan",
+    icon: <IconDiscountCheck />,
+  },
+  {
+    label: "Pengaturan Status",
+    path: "/admin/status",
+    icon: <IconReportAnalytics />,
+  },
+];
+
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const [opened, { toggle }] = useDisclosure();
+  const pathname = usePathname();
+
+  return (
+    <>
+      <AppShell
+        navbar={{
+          width: 250,
+          breakpoint: "sm",
+          collapsed: { mobile: !opened },
+        }}
+        padding="md"
+      >
+        <AppShell.Navbar p="md" withBorder={false}>
+          <Box p={16}>
+            <UnstyledButton>
+              <Image src="/assets/logo.png" alt="logo" />
+            </UnstyledButton>
+          </Box>
+          <Divider />
+          <Flex direction="column" justify="space-between" h="100%">
+            <Group mt={12}>
+              {navLinks?.map((item) => (
+                <Button
+                  color="brand.9"
+                  size="md"
+                  ta="left"
+                  radius="xl"
+                  variant={pathname.includes(item.path) ? "filled" : "subtle"}
+                  component={Link}
+                  fullWidth
+                  justify="left"
+                  href={item.path}
+                  key={item.label}
+                  leftSection={item.icon}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Group>
+            <Stack mt={12}>
+              <Button
+                color="brand.9"
+                size="md"
+                ta="left"
+                radius="xl"
+                variant="subtle"
+                component={Link}
+                fullWidth
+                justify="left"
+                leftSection={<IconUserCircle />}
+              >
+                Bambang Mashuri
+              </Button>
+              <Divider />
+              <Button
+                color="red.9"
+                size="md"
+                ta="left"
+                radius="xl"
+                variant="subtle"
+                component={Link}
+                fullWidth
+                justify="left"
+                leftSection={<IconLogout2 />}
+              >
+                Keluar
+              </Button>
+            </Stack>
+          </Flex>
+        </AppShell.Navbar>
+        <AppShell.Main bg="#F6F8F6">
+          <div>{children}</div>
+        </AppShell.Main>
+      </AppShell>
+    </>
+  );
+}
