@@ -9,6 +9,7 @@ import "./nprogress.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Garuda Nusa",
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <MantineProvider theme={theme}>
+            <Toaster position="top-right" richColors />
             <div>{children}</div>
             <HandleOnComplete />
           </MantineProvider>

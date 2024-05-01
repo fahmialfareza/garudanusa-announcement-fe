@@ -7,3 +7,5 @@ export function onStart() {
 export function onComplete() {
   NProgress.done();
 }
+
+NProgress.configure({ showSpinner: false });

@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/libs/router-event";
+import AuthProvider from "@/providers/AuthProvider";
 import {
   AppShell,
   Box,
@@ -25,7 +26,7 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import React from "react";
 interface NavLink {
@@ -72,9 +73,10 @@ export default function AdminLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const [opened, { toggle }] = useDisclosure();
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
-    <>
+    <AuthProvider>
       <AppShell
         navbar={{
           width: 250,
@@ -131,10 +133,13 @@ export default function AdminLayout({
                 ta="left"
                 radius="xl"
                 variant="subtle"
-                component={Link}
                 fullWidth
                 justify="left"
                 leftSection={<IconLogout2 />}
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
               >
                 Keluar
               </Button>
@@ -145,6 +150,6 @@ export default function AdminLayout({
           <div>{children}</div>
         </AppShell.Main>
       </AppShell>
-    </>
+    </AuthProvider>
   );
 }
