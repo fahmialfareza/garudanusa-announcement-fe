@@ -195,7 +195,7 @@ const ProfilePage = () => {
                   </Stack>
                 </Dropzone>
               </Stack>
-              <Box bg="cyan">{mobilePreviews}</Box>
+              <Box>{mobilePreviews}</Box>
             </SimpleGrid>
           </Stack>
           <Box>
