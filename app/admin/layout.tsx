@@ -141,7 +141,7 @@ export default function AdminLayout({
             </Stack>
           </Flex>
         </AppShell.Navbar>
-        <AppShell.Main bg="#F6F8F6">
+        <AppShell.Main bg="#F5F3F7">
           <div>{children}</div>
         </AppShell.Main>
       </AppShell>

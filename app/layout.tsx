@@ -3,6 +3,8 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { theme } from "@/theme";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import "@mantine/dropzone/styles.css";
 import "./nprogress.css";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
