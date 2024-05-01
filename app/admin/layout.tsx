@@ -2,6 +2,7 @@
 
 import { Link } from "@/libs/router-event";
 import AuthProvider from "@/providers/AuthProvider";
+import { useAuthStore } from "@/store/auth";
 import {
   AppShell,
   Box,
@@ -74,6 +75,7 @@ export default function AdminLayout({
   const [opened, { toggle }] = useDisclosure();
   const pathname = usePathname();
   const router = useRouter();
+  const { setToken } = useAuthStore();
 
   return (
     <AuthProvider>
@@ -139,6 +141,7 @@ export default function AdminLayout({
                 onClick={() => {
                   localStorage.clear();
                   window.location.reload();
+                  setToken(null);
                 }}
               >
                 Keluar

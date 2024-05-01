@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
-function useCountdown(targetDate: Date) {
+function useCountdown(targetDateInput?: Date | string) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -12,7 +12,7 @@ function useCountdown(targetDate: Date) {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = dayjs();
-      const target = dayjs(targetDate);
+      const target = dayjs(targetDateInput);
       const difference = target.diff(now);
 
       if (difference <= 0) {
@@ -36,7 +36,7 @@ function useCountdown(targetDate: Date) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, [targetDateInput]);
 
   return timeLeft;
 }

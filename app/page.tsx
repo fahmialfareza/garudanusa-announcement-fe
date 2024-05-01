@@ -1,6 +1,9 @@
 "use client";
 
-import PassStatusCheck from "@/components/PassStatusCheck";
+import Announcement from "@/components/Announcement";
+import CountDown from "@/components/CountDown";
+import { useGetEvent } from "@/hooks/useGetEvent";
+import { Link } from "@/libs/router-event";
 import {
   ActionIcon,
   Box,
@@ -16,6 +19,9 @@ import { IconUserCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export default function Home() {
+  const { event, isLoading, isPastDate } = useGetEvent();
+  const home = event?.data;
+
   return (
     <Box h="screen">
       <Grid>
@@ -28,7 +34,12 @@ export default function Home() {
               <Text size="xl" c="brand.9">
                 GARUDA NUSA
               </Text>
-              <ActionIcon variant="transparent" color="brand.9">
+              <ActionIcon
+                variant="transparent"
+                color="brand.9"
+                component={Link}
+                href="/login"
+              >
                 <IconUserCircle />
               </ActionIcon>
             </Flex>
@@ -44,16 +55,22 @@ export default function Home() {
                 >
                   <Image src="/assets/logo.png" alt="logo" maw={480} />
                   <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
-                    PENGUMUMAN SELEKSI BERKAS GARUDA NUSA YOUTH SUMMIT
+                    {home?.event_name}
                   </Text>
-                  <PassStatusCheck />
+                  {isPastDate ? (
+                    <Announcement />
+                  ) : (
+                    <CountDown
+                      targetDate={dayjs(home?.date).toDate()}
+                      isLoading={isLoading}
+                    />
+                  )}
                 </Stack>
               </Card>
             </Flex>
             <Center>
-              <Text maw={400} ta="center" fw="bold" color="brand.9">
-                GARUDA NUSA YOUTH ACTION (GNYA) #9 LABUAN BAJOPENGUMUMAN SELEKSI
-                SUBSTANSI © {dayjs().format("YYYY")}
+              <Text maw={400} ta="center" fw="bold" c="brand.9" tt="uppercase">
+                {home?.header_footer_name} © {dayjs().format("YYYY")}
               </Text>
             </Center>
           </Stack>
