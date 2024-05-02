@@ -1,3 +1,5 @@
+"use client";
+
 import { useDocumentTitle } from "@mantine/hooks";
 import React from "react";
 

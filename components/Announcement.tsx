@@ -1,5 +1,6 @@
 import React from "react";
 import { Paper, Text, Button } from "@mantine/core";
+import { Link } from "@/libs/router-event";
 
 const Announcement = () => {
   return (
@@ -10,7 +11,14 @@ const Announcement = () => {
           HASIL TERBAIK!
         </Text>
       </Paper>
-      <Button variant="filled" color="brand.9" size="lg" radius="xl">
+      <Button
+        variant="filled"
+        color="brand.9"
+        size="lg"
+        radius="xl"
+        component={Link}
+        href="/check-status"
+      >
         CEK KELOLOSAN SEKARANG!
       </Button>
     </>

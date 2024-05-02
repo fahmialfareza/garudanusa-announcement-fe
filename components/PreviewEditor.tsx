@@ -9,7 +9,7 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { Paper } from "@mantine/core";
 interface PreviewEditorProps {
-  content: string;
+  content?: string;
 }
 const PreviewEditor = ({ content }: PreviewEditorProps) => {
   const editor = useEditor({
