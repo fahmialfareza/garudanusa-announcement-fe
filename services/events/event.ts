@@ -1,5 +1,6 @@
 import axiosInstance from "@/services/api";
 import axios from "axios";
+import { toast } from "sonner";
 
 export interface EventResponse {
   status: string;
@@ -25,6 +26,7 @@ export const getEvent = async (): Promise<EventResponse> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data.message);
       throw error;
     }
 

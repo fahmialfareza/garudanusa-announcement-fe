@@ -1,20 +1,12 @@
-import { AxiosErrorResponse } from "@/services/api";
 import { EventResponse, getEvent } from "@/services/events/event";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { useMemo } from "react";
-import { toast } from "sonner";
 import dayjs from "dayjs";
+import { useMemo } from "react";
 export const useGetEvent = () => {
-  const { data, isError, isLoading } = useQuery<EventResponse>({
+  const { data, isError, isLoading, error } = useQuery<EventResponse>({
     queryKey: ["getEvent"],
+    retry: 0,
     queryFn: getEvent,
-    meta: {
-      onerror: (error: AxiosError) => {
-        const errorMessage = error.response as unknown as AxiosErrorResponse;
-        toast.error(errorMessage.message);
-      },
-    },
   });
 
   const event = useMemo(() => {

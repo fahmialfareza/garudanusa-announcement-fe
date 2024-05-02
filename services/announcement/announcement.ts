@@ -1,5 +1,6 @@
 import axiosInstance from "@/services/api";
 import axios from "axios";
+import { toast } from "sonner";
 
 export interface AnnouncementResponse {
   status: string;
@@ -38,6 +39,7 @@ export const CheckStatus = async ({
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data.message);
       throw error;
     }
     throw new Error("An unexpected error occurred");

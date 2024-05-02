@@ -1,5 +1,6 @@
 import axiosInstance from "@/services/api";
 import axios from "axios";
+import { toast } from "sonner";
 
 export interface LoginPayload {
   username: string;
@@ -26,6 +27,7 @@ export const Login = async ({
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data.message);
       throw error;
     }
 

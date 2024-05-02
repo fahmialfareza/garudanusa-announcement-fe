@@ -16,12 +16,14 @@ import {
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { useDocumentTitle } from "@mantine/hooks";
 import { IconPhotoUp } from "@tabler/icons-react";
 import { useState } from "react";
 
 const ProfilePage = () => {
   const [desktopImage, setDesktopImage] = useState<FileWithPath[]>([]);
   const [mobileImage, setMobileImage] = useState<FileWithPath[]>([]);
+  useDocumentTitle("GARUDA NUSA | Admin Profile");
 
   const desktopPreviews = desktopImage.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);

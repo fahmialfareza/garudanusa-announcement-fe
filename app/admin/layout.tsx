@@ -15,7 +15,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
 import {
   IconDiscountCheck,
   IconFileDescription,
@@ -76,6 +76,7 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { setToken } = useAuthStore();
+  useDocumentTitle("GARUDA NUSA | Admin Upload Data");
 
   return (
     <AuthProvider>

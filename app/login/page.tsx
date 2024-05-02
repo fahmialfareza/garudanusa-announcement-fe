@@ -19,10 +19,12 @@ import AuthProvider from "@/providers/AuthProvider";
 import { useLayoutEffect } from "react";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
+import { useDocumentTitle } from "@mantine/hooks";
 
 const Login = () => {
   const { token } = useAuthStore();
   const router = useRouter();
+  useDocumentTitle("GARUDA NUSA | Login");
 
   const { login, isLoading, isError, error } = useLogin();
   const form = useForm({

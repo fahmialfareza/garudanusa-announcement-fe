@@ -15,18 +15,24 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import { IconUserCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export default function Home() {
   const { event, isLoading, isPastDate } = useGetEvent();
   const home = event?.data;
+  useDocumentTitle("GARUDA NUSA");
+
+  const backDropImage =
+    `${process.env.NEXT_PUBLIC_API}${home?.desktop_photo}` ||
+    "/assets/hero.png";
 
   return (
     <Box h="screen">
       <Grid>
         <Grid.Col span={6} h="100vh">
-          <Image src="/assets/hero.png" alt="hero" h={"100%"} />
+          <Image src={backDropImage} alt="hero" h={"100%"} />
         </Grid.Col>
         <Grid.Col span={6} pr={24} pt={24}>
           <Stack gap={48} justify="center" align="stretch" h={"100%"}>
