@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUser } from "@/hooks/useGetUser";
+import { useGetUser } from "@/hooks/useUser";
 import { Link } from "@/libs/router-event";
 import AuthProvider from "@/providers/AuthProvider";
 import { useAuthStore } from "@/store/auth";

@@ -63,7 +63,7 @@ const StatusSettingsPage = () => {
             size="lg"
             onClick={clickCreateStatus}
           >
-            Buat Status Baru
+            Tambah Status
           </Button>
         </Flex>
       </Paper>
