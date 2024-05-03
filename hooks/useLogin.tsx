@@ -1,5 +1,5 @@
 import { AxiosErrorResponse } from "@/services/api";
-import { Login, LoginPayload, LoginResponse } from "@/services/auth/auth";
+import { login, LoginPayload, LoginResponse } from "@/services/auth/auth";
 import { useAuthStore } from "@/store/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -14,7 +14,7 @@ export const useLogin = () => {
     AxiosError,
     LoginPayload
   >({
-    mutationFn: Login,
+    mutationFn: login,
     onMutate: () => {
       toast.loading("Logging in...");
     },

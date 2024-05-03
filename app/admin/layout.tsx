@@ -1,5 +1,6 @@
 "use client";
 
+import { useGetUser } from "@/hooks/useGetUser";
 import { Link } from "@/libs/router-event";
 import AuthProvider from "@/providers/AuthProvider";
 import { useAuthStore } from "@/store/auth";
@@ -13,6 +14,7 @@ import {
   Image,
   Stack,
   UnstyledButton,
+  Text,
 } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
@@ -76,6 +78,7 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { setToken } = useAuthStore();
+  const { user } = useGetUser();
   useDocumentTitle("GARUDA NUSA | Admin Upload Data");
 
   return (
@@ -121,13 +124,13 @@ export default function AdminLayout({
                 size="md"
                 ta="left"
                 radius="xl"
-                variant="subtle"
+                variant="transparent"
                 component={Link}
                 fullWidth
                 justify="left"
                 leftSection={<IconUserCircle />}
               >
-                Bambang Mashuri
+                <Text truncate="end">{user?.data?.name}</Text>
               </Button>
               <Divider />
               <Button

@@ -26,7 +26,7 @@ const PreviewEditor = ({ content }: PreviewEditorProps) => {
   });
 
   return (
-    <Paper withBorder p={24} w="100%">
+    <Paper w="100%">
       <RichTextEditor editor={editor}>
         <RichTextEditor.Content />
       </RichTextEditor>
