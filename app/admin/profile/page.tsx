@@ -1,11 +1,14 @@
 "use client";
 
-import ProfileTextEditor from "@/app/admin/profile/ProfileTextEditor";
+import { useGetEvent } from "@/hooks/useGetEvent";
+import {
+  AnnouncementArgs,
+  useSubmitAnnouncement,
+} from "@/hooks/useUpdateEvent";
 import {
   Box,
   Button,
   Center,
-  Grid,
   Image,
   Paper,
   SimpleGrid,
@@ -16,14 +19,80 @@ import {
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { useForm } from "@mantine/form";
 import { useDocumentTitle } from "@mantine/hooks";
-import { IconPhotoUp } from "@tabler/icons-react";
-import { useState } from "react";
+import { Link, RichTextEditor } from "@mantine/tiptap";
+import { IconColorPicker, IconPhotoUp } from "@tabler/icons-react";
+import { Color } from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
+import SubScript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import TextAlign from "@tiptap/extension-text-align";
+import TextStyle from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+import { useEffect, useState } from "react";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const ProfilePage = () => {
+  useDocumentTitle("GARUDA NUSA | Admin Profile");
+
   const [desktopImage, setDesktopImage] = useState<FileWithPath[]>([]);
   const [mobileImage, setMobileImage] = useState<FileWithPath[]>([]);
-  useDocumentTitle("GARUDA NUSA | Admin Profile");
+  const { submitAnnouncement } = useSubmitAnnouncement();
+
+  const { event } = useGetEvent();
+
+  const form = useForm<Partial<AnnouncementArgs["data"]>>({
+    initialValues: {
+      note: event?.data.note || "",
+      countdown: dayjs(dayjs(event?.data.date).toISOString()).toDate() || "",
+      event_name: event?.data.event_name || "",
+      header_footer_name: event?.data.header_footer_name || "",
+      selection_phase: event?.data.selection_phase || "",
+    },
+  });
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Link,
+      Superscript,
+      SubScript,
+      Highlight,
+      Color,
+      TextStyle,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+    ],
+    content: event?.data.note || null,
+    onUpdate: ({ editor }) => {
+      form.setFieldValue("note", editor.getHTML());
+    },
+    onCreate(props) {
+      props.editor.commands.setContent(event?.data.note as string);
+    },
+  });
+
+  useEffect(() => {
+    if (event?.data) {
+      form.setValues({
+        note: event?.data.note,
+        countdown: dayjs(dayjs(event?.data.date).toISOString()).toDate(),
+        event_name: event?.data.event_name,
+        header_footer_name: event?.data.header_footer_name,
+        selection_phase: event?.data.selection_phase,
+      });
+    }
+    editor?.commands.setContent(event?.data.note as string);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event?.data]);
 
   const desktopPreviews = desktopImage.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
@@ -42,6 +111,7 @@ const ProfilePage = () => {
 
   const mobilePreviews = mobileImage.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
+
     return (
       <Image
         key={index}
@@ -55,65 +125,135 @@ const ProfilePage = () => {
     );
   });
 
+  const handleUpload = (data: typeof form.values) => {
+    submitAnnouncement({
+      url: "/event",
+      data: {
+        countdown: data.countdown,
+        event_name: data.event_name as string,
+        header_footer_name: data.header_footer_name as string,
+        note: data.note as string,
+        selection_phase: data.selection_phase as string,
+        desktop_photo: desktopImage[0],
+        mobile_photo: mobileImage[0],
+      },
+    });
+  };
+
   return (
     <Stack>
       <Paper bg="teal.1" p="lg" radius={12}>
         <Text c="teal.9" size="xl" fw="bolder" ta="center">
-          SISTEM INFORMASI KELOLOSAN GARUDA NUSA YOUTH ACTION(GNYA) #9 LABUAN
-          BAJO
+          SISTEM INFORMASI KELOLOSAN GARUDA NUSA {event?.data.event_name}
         </Text>
       </Paper>
       <Paper p={24}>
         <Stack gap={24}>
-          <Grid>
-            <Grid.Col span={7}>
-              <Stack>
-                <TextInput
-                  label="Nama Event"
-                  withAsterisk
-                  radius="lg"
-                  variant="filled"
-                  w="100%"
-                  size="lg"
-                  placeholder="Masukan nama event"
-                />
-                <TextInput
-                  label="Header Footer"
-                  withAsterisk
-                  radius="lg"
-                  variant="filled"
-                  w="100%"
-                  size="lg"
-                  placeholder="Masukan header footer"
-                />
-              </Stack>
-            </Grid.Col>
-            <Grid.Col span={5}>
-              <Stack>
-                <DateTimePicker
-                  label="Tanggal Pengumuman"
-                  withAsterisk
-                  radius="lg"
-                  variant="filled"
-                  w="100%"
-                  size="lg"
-                  placeholder="Tanggal Pengumuman"
-                />
-                <TextInput
-                  label="Tahap Seleksi"
-                  withAsterisk
-                  radius="lg"
-                  variant="filled"
-                  w="100%"
-                  size="lg"
-                  placeholder="Masukan tahap seleksi"
-                />
-              </Stack>
-            </Grid.Col>
-          </Grid>
+          <TextInput
+            label="Nama Event"
+            withAsterisk
+            radius="lg"
+            variant="filled"
+            w="100%"
+            size="lg"
+            placeholder="Masukan nama event"
+            {...form.getInputProps("event_name")}
+          />
+          <TextInput
+            label="Header Footer"
+            withAsterisk
+            radius="lg"
+            variant="filled"
+            w="100%"
+            size="lg"
+            placeholder="Masukan header footer"
+            {...form.getInputProps("header_footer_name")}
+          />
+          <DateTimePicker
+            valueFormat="DD MMM YYYY hh:mm A"
+            label="Tanggal Pengumuman"
+            withAsterisk
+            radius="lg"
+            variant="filled"
+            w="100%"
+            size="lg"
+            placeholder="Tanggal Pengumuman"
+            {...form.getInputProps("countdown")}
+          />
+          <TextInput
+            label="Tahap Seleksi"
+            withAsterisk
+            radius="lg"
+            variant="filled"
+            w="100%"
+            size="lg"
+            placeholder="Masukan tahap seleksi"
+            {...form.getInputProps("selection_phase")}
+          />
+
           <Stack gap={4}>
             <Text fw={500}>Catatan</Text>
-            <ProfileTextEditor />
+            <RichTextEditor editor={editor} mih={300} onChange={() => {}}>
+              <RichTextEditor.Toolbar sticky stickyOffset={60}>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Bold />
+                  <RichTextEditor.Italic />
+                  <RichTextEditor.Underline />
+                  <RichTextEditor.Strikethrough />
+                  <RichTextEditor.ClearFormatting />
+                  <RichTextEditor.Highlight />
+                  <RichTextEditor.Code />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.H1 />
+                  <RichTextEditor.H2 />
+                  <RichTextEditor.H3 />
+                  <RichTextEditor.H4 />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Blockquote />
+                  <RichTextEditor.Hr />
+                  <RichTextEditor.BulletList />
+                  <RichTextEditor.OrderedList />
+                  <RichTextEditor.Subscript />
+                  <RichTextEditor.Superscript />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Link />
+                  <RichTextEditor.Unlink />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.AlignLeft />
+                  <RichTextEditor.AlignCenter />
+                  <RichTextEditor.AlignJustify />
+                  <RichTextEditor.AlignRight />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Undo />
+                  <RichTextEditor.Redo />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Control interactive={false}>
+                    <IconColorPicker size="1rem" stroke={1.5} />
+                  </RichTextEditor.Control>
+                  <RichTextEditor.Color color="#E67701" />
+                  <RichTextEditor.Color color="#087F5B" />
+                  <RichTextEditor.Color color="#C92A2A" />
+                  <RichTextEditor.Color color="#FAB006" />
+                  <RichTextEditor.Color color="#364FC7" />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.UnsetColor />
+              </RichTextEditor.Toolbar>
+
+              <RichTextEditor.Content />
+            </RichTextEditor>
           </Stack>
           <Stack gap={4}>
             <Text fw={500} mb={28}>
@@ -158,7 +298,18 @@ const ProfilePage = () => {
                   </Stack>
                 </Dropzone>
               </Stack>
-              <div>{desktopPreviews}</div>
+              <Box>
+                {desktopPreviews}
+                {!desktopImage.length ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_IMAGE}${event?.data.desktop_photo}`}
+                    w="100%"
+                    h="100%"
+                    style={{ objectFit: "cover" }}
+                    alt="desktop image"
+                  />
+                ) : null}
+              </Box>
               <Stack>
                 <Text fw={500}>Mobile </Text>
                 <Dropzone
@@ -197,7 +348,18 @@ const ProfilePage = () => {
                   </Stack>
                 </Dropzone>
               </Stack>
-              <Box>{mobilePreviews}</Box>
+              <Box>
+                {mobilePreviews}
+                {!mobileImage.length ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_IMAGE}${event?.data.mobile_photo}`}
+                    w="100%"
+                    h="100%"
+                    style={{ objectFit: "cover" }}
+                    alt="mobile image"
+                  />
+                ) : null}
+              </Box>
             </SimpleGrid>
           </Stack>
           <Box>
@@ -208,6 +370,7 @@ const ProfilePage = () => {
               radius="xl"
               tt="uppercase"
               fullWidth={false}
+              onClick={() => form.onSubmit(handleUpload)()}
             >
               Update
             </Button>

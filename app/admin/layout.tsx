@@ -18,6 +18,7 @@ import {
   Burger,
 } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/tiptap/styles.css";
 import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
 import {
   IconDiscountCheck,
