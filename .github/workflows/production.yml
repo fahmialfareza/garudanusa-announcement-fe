@@ -11,7 +11,7 @@ on:
         default: "vercel"
 
 jobs:
-  Deploy-Production:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
