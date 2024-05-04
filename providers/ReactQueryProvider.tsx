@@ -10,6 +10,17 @@ function ReactQueryProvider({ children }: React.PropsWithChildren) {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          retry(failureCount, error) {
+            if (error instanceof Error) {
+              if (error.message.includes("Network Error")) {
+                return false;
+              }
+            }
+            if (failureCount > 3) {
+              return false;
+            }
+            return true;
+          },
           staleTime: 3 * (60 * 1000), // 3 minutes
         },
       },

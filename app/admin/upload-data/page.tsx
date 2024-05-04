@@ -1,11 +1,14 @@
 "use client";
 
+import { useFileUpload } from "@/hooks/useUploadRegristrant";
+import { Link } from "@/libs/router-event";
 import {
   Button,
   Center,
   Flex,
   List,
   Paper,
+  Progress,
   Stack,
   Text,
   ThemeIcon,
@@ -13,11 +16,33 @@ import {
 } from "@mantine/core";
 import { Dropzone, FileWithPath, MS_EXCEL_MIME_TYPE } from "@mantine/dropzone";
 import { IconCircleCheck, IconFileSpreadsheet } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const UploadDataPage = () => {
   const [dataRegistrant, setDataRegistrant] = useState<FileWithPath[]>([]);
-  console.log(dataRegistrant.map((file) => file.name));
+
+  const { uploadFile, isSuccess } = useFileUpload();
+
+  const handleUpload = (files: FileWithPath[]) => {
+    if (files.length === 0) {
+      return;
+    }
+    files.forEach((file) => {
+      uploadFile({
+        url: "/announcement/import",
+        file: file,
+        fieldName: "announcement",
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setDataRegistrant([]);
+    }
+  }, [isSuccess]);
+
   return (
     <Paper p="lg" radius={12} h="80vh">
       <Stack gap={24}>
@@ -25,7 +50,13 @@ const UploadDataPage = () => {
           <Text fw={500} size="lg" c="brand.9">
             Upload File Pendaftar{" "}
           </Text>
-          <Button variant="filled" color="brand.9" size="lg" radius="xl">
+          <Button
+            variant="filled"
+            color="brand.9"
+            size="lg"
+            radius="xl"
+            onClick={() => handleUpload(dataRegistrant)}
+          >
             Submit
           </Button>
         </Flex>
@@ -110,6 +141,10 @@ const UploadDataPage = () => {
                   fz="xl"
                   ml="-16"
                   c="teal.9"
+                  component={Link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="/assets/template_data.xlsx"
                   fw="bolder"
                   style={{
                     textDecoration: "underline",
