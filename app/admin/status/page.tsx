@@ -17,7 +17,6 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
-import "@mantine/tiptap/styles.css";
 import { IconPencil, IconTrashX } from "@tabler/icons-react";
 import { useState } from "react";
 

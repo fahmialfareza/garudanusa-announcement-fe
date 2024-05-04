@@ -20,11 +20,14 @@ import { useLayoutEffect } from "react";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
 import { useDocumentTitle } from "@mantine/hooks";
+import { useGetEvent } from "@/hooks/useGetEvent";
 
 const Login = () => {
   const { token } = useAuthStore();
   const router = useRouter();
   useDocumentTitle("GARUDA NUSA | Login");
+  const { event, isPastDate } = useGetEvent();
+  const home = event?.data;
 
   const { login, isLoading, isError, error } = useLogin();
   const form = useForm({
@@ -56,11 +59,19 @@ const Login = () => {
   return (
     <AuthProvider>
       <Box>
-        <Grid>
+        <Grid gutter={0}>
           <Grid.Col span={6} h="100vh">
-            <Image src="/assets/hero.png" alt="hero" h={"100%"} />
+            {home?.desktop_photo ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
+                alt="hero"
+                h={"100%"}
+              />
+            ) : (
+              <Box h={"100%"} bg="gray" />
+            )}
           </Grid.Col>
-          <Grid.Col span={6} pr={24}>
+          <Grid.Col span={6} px={24}>
             <Stack gap={48} justify="center" align="stretch" h={"100%"}>
               <Flex h="70%">
                 <Card p={28} withBorder w="100%" radius="lg">

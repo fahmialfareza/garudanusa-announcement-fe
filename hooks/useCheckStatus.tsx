@@ -1,7 +1,7 @@
 import {
   AnnouncementResponse,
-  CheckStatus,
   CheckStatusPayload,
+  checkStatus,
 } from "@/services/announcement/announcement";
 import { AxiosErrorResponse } from "@/services/api";
 import { useResultStore } from "@/store/status";
@@ -18,7 +18,7 @@ export const useCheckStatus = () => {
     AxiosError,
     CheckStatusPayload
   >({
-    mutationFn: CheckStatus,
+    mutationFn: checkStatus,
     onMutate: () => {
       toast.loading("Checking data ...");
     },

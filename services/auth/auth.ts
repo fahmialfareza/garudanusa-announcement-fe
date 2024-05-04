@@ -79,8 +79,8 @@ export const getCurrentUser = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       toast.error(error.response?.data.message);
-      localStorage.clear();
-      window.location.reload();
+      // localStorage.clear();
+      // window.location.reload();
       throw error;
     }
 

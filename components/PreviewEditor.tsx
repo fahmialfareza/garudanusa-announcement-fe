@@ -7,7 +7,11 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
+import { Color } from "@tiptap/extension-color";
 import { Paper } from "@mantine/core";
+import "@mantine/tiptap/styles.css";
+import TextStyle from "@tiptap/extension-text-style";
+
 interface PreviewEditorProps {
   content?: string;
 }
@@ -20,6 +24,8 @@ const PreviewEditor = ({ content }: PreviewEditorProps) => {
       Superscript,
       SubScript,
       Highlight,
+      Color,
+      TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content,
