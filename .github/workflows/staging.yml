@@ -36,6 +36,3 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Assign Domain to Vercel Preview (Staging)
-        run: vercel alias https://garudanusa-announcement-fe-fahmialfarezas-projects.vercel.app pengumuman-staging.garudanusa.id --token=${{ secrets.VERCEL_TOKEN }}
