@@ -35,4 +35,8 @@ jobs:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
+        id: deploy
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Assign Domain
+        run: vercel alias ${{ steps.deploy.outputs.preview-url }} pengumuman-staging.garudanusa.id --token=${{ secrets.VERCEL_TOKEN }}
