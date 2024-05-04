@@ -15,7 +15,12 @@ import {
   TextInput,
   rem,
 } from "@mantine/core";
-import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import {
+  useDebouncedValue,
+  useDisclosure,
+  useDocumentTitle,
+} from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -24,6 +29,13 @@ const DataRegistrantPage = () => {
   const { status, isLoading: isStatusLoading } = useGetStatus();
   const { announcement, isLoading: isAnnouncementLoading } =
     useGetAnnouncement();
+
+  const form = useForm({
+    mode: "uncontrolled",
+    initialValues: {
+      search: "",
+    },
+  });
 
   const [
     editOpen,
@@ -43,7 +55,36 @@ const DataRegistrantPage = () => {
       total_score: undefined,
     });
 
-  const rows = announcement?.data.map((item) => (
+  const [debouncedSearchTerm] = useDebouncedValue(form.getValues().search, 500);
+
+  form.watch("search", ({ previousValue, value, touched, dirty }) => {
+    if (!touched && !dirty) return;
+    if (!value) {
+      form.setValues({ search: previousValue });
+      return;
+    }
+    form.setValues({ search: value });
+  });
+
+  const filterAnnouncement = announcement?.data.filter((item) => {
+    const searchTerm = debouncedSearchTerm.toLowerCase();
+    const itemValues = [
+      item.name.toLowerCase(),
+      item.phone.toLowerCase(),
+      item.city_of_birth.toLowerCase(),
+      item.address_from.toLowerCase(),
+      item.school.toLowerCase(),
+      item.date_of_birth
+        ? new Date(item.date_of_birth).toLocaleDateString()
+        : "",
+      item.status_id?.toString() ?? "",
+      item.total_score?.toString() ?? "",
+    ];
+
+    return itemValues.some((value) => value.includes(searchTerm));
+  });
+
+  const rows = filterAnnouncement?.map((item) => (
     <Table.Tr
       key={item.id}
       style={{ cursor: "pointer" }}
@@ -120,9 +161,11 @@ const DataRegistrantPage = () => {
           <TextInput
             label="Cari"
             radius="md"
+            miw={300}
             variant="filled"
             size="md"
             leftSection={<IconSearch size={16} />}
+            {...form.getInputProps("search")}
           />
         </Flex>
         <Divider />
