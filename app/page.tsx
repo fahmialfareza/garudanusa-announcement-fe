@@ -12,6 +12,7 @@ import {
   Flex,
   Grid,
   Image,
+  Paper,
   Stack,
   Text,
 } from "@mantine/core";
@@ -24,17 +25,21 @@ export default function Home() {
   const home = event?.data;
   useDocumentTitle("GARUDA NUSA");
 
-  const backDropImage =
-    `${process.env.NEXT_PUBLIC_API}${home?.desktop_photo}` ||
-    "/assets/hero.png";
-
   return (
-    <Box h="screen">
-      <Grid>
-        <Grid.Col span={6} h="100vh">
-          <Image src={backDropImage} alt="hero" h={"100%"} />
+    <Box>
+      <Grid gutter={0}>
+        <Grid.Col span={6} h="100vh" p={0} m={0}>
+          {home?.desktop_photo ? (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
+              alt="hero"
+              h={"100%"}
+            />
+          ) : (
+            <Box h={"100%"} bg="gray" />
+          )}
         </Grid.Col>
-        <Grid.Col span={6} pr={24} pt={24}>
+        <Grid.Col span={6} px={24} pt={24}>
           <Stack gap={48} justify="center" align="stretch" h={"100%"}>
             <Flex justify="space-between" w="100%" mb={24}>
               <Text size="xl" c="brand.9">

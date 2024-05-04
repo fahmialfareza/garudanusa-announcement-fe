@@ -15,6 +15,7 @@ import {
   Stack,
   UnstyledButton,
   Text,
+  Burger,
 } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
@@ -91,6 +92,16 @@ export default function AdminLayout({
         }}
         padding="md"
       >
+        <AppShell.Header>
+          <Group h="100%" px="md">
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+            />
+          </Group>
+        </AppShell.Header>
         <AppShell.Navbar p="md" withBorder={false}>
           <Box p={16}>
             <UnstyledButton>

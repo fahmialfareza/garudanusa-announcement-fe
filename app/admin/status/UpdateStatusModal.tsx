@@ -91,6 +91,7 @@ const UpdateStatusModal = ({
         color: payload?.color,
       });
     }
+    editor?.commands.setContent(payload?.message as string);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload]);
 

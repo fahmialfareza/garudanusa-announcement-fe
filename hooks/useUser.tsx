@@ -1,4 +1,3 @@
-import { AxiosErrorResponse } from "@/services/api";
 import {
   CurrentUserResponse,
   DeleteUserPayload,
@@ -13,10 +12,12 @@ import {
 import { useAuthStore } from "@/store/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export const useGetUser = () => {
   const { setToken } = useAuthStore();
+  const router = useRouter();
   const { data, isError, isLoading, error, refetch } =
     useQuery<CurrentUserResponse>({
       queryKey: ["getCurrentUser"],
@@ -24,8 +25,9 @@ export const useGetUser = () => {
       queryFn: getCurrentUser,
       meta: {
         onerror: () => {
-          setToken(null);
-          localStorage.clear();
+          // setToken(null);
+          // localStorage.clear();
+          // router.push("/login");
         },
       },
     });
