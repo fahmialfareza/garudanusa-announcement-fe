@@ -27,7 +27,6 @@ export const useSubmitAnnouncement = () => {
       if (value instanceof File) {
         formData.append(key, value, value.name);
       } else {
-        // Convert countdown to ISO string if it's the countdown key
         const formattedValue =
           key === "countdown"
             ? dayjs(value).format("YYYY-MM-DD HH:mm:ss")

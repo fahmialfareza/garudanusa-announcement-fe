@@ -1,4 +1,5 @@
 "use client";
+
 import UpdateAnnouncementModal from "@/app/admin/data-pendaftar/UpdateAnnouncementModal";
 import { useGetAnnouncement } from "@/hooks/useAnnouncement";
 import { useGetStatus } from "@/hooks/useStatus";
@@ -7,7 +8,9 @@ import {
   Badge,
   Divider,
   Flex,
+  Pagination,
   Paper,
+  Select,
   Skeleton,
   Stack,
   Table,
@@ -27,6 +30,8 @@ import { useState } from "react";
 const DataRegistrantPage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Data Pendaftar");
   const { status, isLoading: isStatusLoading } = useGetStatus();
+  const [displayCount, setDisplayCount] = useState("10");
+  const [activePage, setPage] = useState(1);
   const { announcement, isLoading: isAnnouncementLoading } =
     useGetAnnouncement();
 
@@ -57,6 +62,15 @@ const DataRegistrantPage = () => {
 
   const [debouncedSearchTerm] = useDebouncedValue(form.getValues().search, 500);
 
+  function chunk<T>(array: T[] | undefined, size: number): T[][] {
+    if (!array?.length) {
+      return [];
+    }
+    const head = array.slice(0, size);
+    const tail = array.slice(size);
+    return [head, ...chunk(tail, size)];
+  }
+
   form.watch("search", ({ previousValue, value, touched, dirty }) => {
     if (!touched && !dirty) return;
     if (!value) {
@@ -84,7 +98,11 @@ const DataRegistrantPage = () => {
     return itemValues.some((value) => value.includes(searchTerm));
   });
 
-  const rows = filterAnnouncement?.map((item) => (
+  const data = chunk(filterAnnouncement, parseInt(displayCount))[
+    activePage - 1
+  ];
+
+  const rows = data?.map((item) => (
     <Table.Tr
       key={item.id}
       style={{ cursor: "pointer" }}
@@ -187,6 +205,24 @@ const DataRegistrantPage = () => {
             </Table.Tbody>
             <Table.Caption>Data Pendaftar</Table.Caption>
           </Table>
+          <Flex justify="flex-end" w="100%" align="center" gap={24} mt={24}>
+            <Select
+              w="100px"
+              value={displayCount}
+              onChange={(value) => setDisplayCount(value as string)}
+              data={[
+                { value: "10", label: "10" },
+                { value: "25", label: "25" },
+                { value: "50", label: "50" },
+                { value: "100", label: "100" },
+              ]}
+            />
+            <Pagination
+              total={data?.length}
+              value={activePage}
+              onChange={setPage}
+            />
+          </Flex>
         </Table.ScrollContainer>
       </Stack>
 
