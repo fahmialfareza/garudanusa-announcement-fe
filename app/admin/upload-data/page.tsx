@@ -66,7 +66,6 @@ const UploadDataPage = () => {
           </Flex>
           <Dropzone
             onDrop={setDataRegistrant}
-            onReject={(files) => console.log("rejected files", files)}
             maxSize={5 * 1024 ** 2}
             accept={MS_EXCEL_MIME_TYPE}
           >

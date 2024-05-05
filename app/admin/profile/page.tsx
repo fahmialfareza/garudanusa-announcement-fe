@@ -283,7 +283,6 @@ const ProfilePage = () => {
                 <Text fw={500}>Desktop </Text>
                 <Dropzone
                   onDrop={setDesktopImage}
-                  onReject={(files) => console.log("rejected files", files)}
                   maxSize={5 * 1024 ** 2}
                   accept={IMAGE_MIME_TYPE}
                 >
@@ -333,7 +332,6 @@ const ProfilePage = () => {
                 <Text fw={500}>Mobile </Text>
                 <Dropzone
                   onDrop={setMobileImage}
-                  onReject={(files) => console.log("rejected files", files)}
                   maxSize={5 * 1024 ** 2}
                   accept={IMAGE_MIME_TYPE}
                 >

@@ -70,11 +70,6 @@ const CreateStatusModal = ({
     },
   });
 
-  console.log("form.getValues().message");
-  console.log(form.getValues().message);
-  console.log("editor.getHTML()");
-  console.log(editor?.getHTML());
-
   const handleSubmit = (data: typeof form.values) => {
     createStatus({
       status: data.status,

@@ -53,7 +53,6 @@ const UserAdminPage = () => {
             radius="xl"
             color="yellow.9"
             onClick={() => {
-              console.log("edit pengelola");
             }}
           >
             <IconPencil />
