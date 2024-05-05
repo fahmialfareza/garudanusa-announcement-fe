@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   TextInput,
+  em,
 } from "@mantine/core";
 import dayjs from "dayjs";
 import { useForm } from "@mantine/form";
@@ -19,11 +20,12 @@ import AuthProvider from "@/providers/AuthProvider";
 import { useLayoutEffect } from "react";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useDocumentTitle, useMediaQuery } from "@mantine/hooks";
 import { useGetEvent } from "@/hooks/useGetEvent";
 
 const Login = () => {
   const { token } = useAuthStore();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const router = useRouter();
   useDocumentTitle("GARUDA NUSA | Login");
   const { event, isPastDate } = useGetEvent();

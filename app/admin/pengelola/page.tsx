@@ -1,6 +1,7 @@
 "use client";
 
 import CreateAdminUserModal from "@/app/admin/pengelola/CreateAdminUserModal";
+import AdminHeader from "@/components/AdminHeader";
 import { useDeleteUser, useGetUsers } from "@/hooks/useUser";
 import {
   Paper,
@@ -91,75 +92,82 @@ const UserAdminPage = () => {
   ));
 
   return (
-    <Paper p="lg" radius={12} mih={"50vh"}>
-      <Stack gap={40}>
-        <Flex justify="space-between" align="center">
-          <Text c="brand.9" size="lg" fw="bolder">
-            Daftar Pengelola
-          </Text>
-          <Button
-            variant="filled"
-            radius="xl"
-            color="brand.9"
-            size="lg"
-            onClick={clickCreateAdminUser}
-          >
-            Tambah Pengelola
-          </Button>
-        </Flex>
-        <Divider />
-        <Table stickyHeader stickyHeaderOffset={60}>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>No.</Table.Th>
-              <Table.Th>Nama Admin</Table.Th>
-              <Table.Th>Username</Table.Th>
-              <Table.Th>Aksi</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{isLoading ? rowsLoading : rows}</Table.Tbody>
-          <Table.Caption>Pengelola Garuda Nusa</Table.Caption>
-        </Table>
-      </Stack>
-      <CreateAdminUserModal
-        createAdminOpen={createOpen}
-        closeCreateAdmin={closeCreateAdminUser}
-      />
-      <Modal
-        opened={deleteOpen}
-        onClose={closeDeleteUser}
-        title={`Hapus Admin ${selectedUser.name}`}
-        key="delete-user-modal"
-        centered
-      >
-        <Stack gap={24}>
-          <Text fw="bolder" fz={24}>
-            Yakin Ingin Menghapus User?
-          </Text>
-          <Flex justify="end">
-            <Button variant="transparent" c="brand.9" onClick={closeDeleteUser}>
-              Batal
-            </Button>
+    <>
+      <AdminHeader />
+      <Paper p="lg" radius={12} mih={"50vh"}>
+        <Stack gap={40}>
+          <Flex justify="space-between" align="center">
+            <Text c="brand.9" size="lg" fw="bolder">
+              Daftar Pengelola
+            </Text>
             <Button
-              color="red.9"
               variant="filled"
               radius="xl"
-              onClick={() => {
-                if (!selectedUser.id) return;
-                if (selectedUser.id) {
-                  deleteUser({
-                    id: selectedUser.id,
-                  });
-                }
-                closeDeleteUser();
-              }}
+              color="brand.9"
+              size="lg"
+              onClick={clickCreateAdminUser}
             >
-              Hapus
+              Tambah Pengelola
             </Button>
           </Flex>
+          <Divider />
+          <Table stickyHeader stickyHeaderOffset={60}>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>No.</Table.Th>
+                <Table.Th>Nama Admin</Table.Th>
+                <Table.Th>Username</Table.Th>
+                <Table.Th>Aksi</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{isLoading ? rowsLoading : rows}</Table.Tbody>
+            <Table.Caption>Pengelola Garuda Nusa</Table.Caption>
+          </Table>
         </Stack>
-      </Modal>
-    </Paper>
+        <CreateAdminUserModal
+          createAdminOpen={createOpen}
+          closeCreateAdmin={closeCreateAdminUser}
+        />
+        <Modal
+          opened={deleteOpen}
+          onClose={closeDeleteUser}
+          title={`Hapus Admin ${selectedUser.name}`}
+          key="delete-user-modal"
+          centered
+        >
+          <Stack gap={24}>
+            <Text fw="bolder" fz={24}>
+              Yakin Ingin Menghapus User?
+            </Text>
+            <Flex justify="end">
+              <Button
+                variant="transparent"
+                c="brand.9"
+                onClick={closeDeleteUser}
+              >
+                Batal
+              </Button>
+              <Button
+                color="red.9"
+                variant="filled"
+                radius="xl"
+                onClick={() => {
+                  if (!selectedUser.id) return;
+                  if (selectedUser.id) {
+                    deleteUser({
+                      id: selectedUser.id,
+                    });
+                  }
+                  closeDeleteUser();
+                }}
+              >
+                Hapus
+              </Button>
+            </Flex>
+          </Stack>
+        </Modal>
+      </Paper>
+    </>
   );
 };
 

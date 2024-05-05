@@ -9,7 +9,10 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Image,
+  Loader,
+  LoadingOverlay,
   Paper,
   SimpleGrid,
   Stack,
@@ -35,10 +38,14 @@ import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import id from "dayjs/locale/id";
 import { useEffect, useState } from "react";
+import AdminHeader from "@/components/AdminHeader";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.locale(id);
+dayjs.tz.setDefault("Asia/Jakarta");
 
 const ProfilePage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Profile");
@@ -47,7 +54,7 @@ const ProfilePage = () => {
   const [mobileImage, setMobileImage] = useState<FileWithPath[]>([]);
   const { submitAnnouncement } = useSubmitAnnouncement();
 
-  const { event } = useGetEvent();
+  const { event, isLoading } = useGetEvent();
 
   const form = useForm<Partial<AnnouncementArgs["data"]>>({
     initialValues: {
@@ -141,12 +148,24 @@ const ProfilePage = () => {
   };
 
   return (
-    <Stack>
-      <Paper bg="teal.1" p="lg" radius={12}>
-        <Text c="teal.9" size="xl" fw="bolder" ta="center">
-          SISTEM INFORMASI KELOLOSAN GARUDA NUSA {event?.data.event_name}
-        </Text>
-      </Paper>
+    <Stack pos="relative">
+      <LoadingOverlay
+        visible={isLoading}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{
+          color: "brand.9",
+          children: (
+            <Flex align="center" gap={12} direction="column">
+              <Loader size="lg" color="brand.9" />
+              <Text c="brand.9" size="lg" fw="bolder">
+                Memuat...
+              </Text>
+            </Flex>
+          ),
+        }}
+      />
+      <AdminHeader />
       <Paper p={24}>
         <Stack gap={24}>
           <TextInput
@@ -170,7 +189,7 @@ const ProfilePage = () => {
             {...form.getInputProps("header_footer_name")}
           />
           <DateTimePicker
-            valueFormat="DD MMM YYYY hh:mm A"
+            valueFormat="DD MMM YYYY hh:mm WIB"
             label="Tanggal Pengumuman"
             withAsterisk
             radius="lg"
@@ -300,7 +319,7 @@ const ProfilePage = () => {
               </Stack>
               <Box>
                 {desktopPreviews}
-                {!desktopImage.length ? (
+                {!desktopImage.length && !isLoading ? (
                   <Image
                     src={`${process.env.NEXT_PUBLIC_IMAGE}${event?.data.desktop_photo}`}
                     w="100%"
@@ -350,7 +369,7 @@ const ProfilePage = () => {
               </Stack>
               <Box>
                 {mobilePreviews}
-                {!mobileImage.length ? (
+                {!mobileImage.length && !isLoading ? (
                   <Image
                     src={`${process.env.NEXT_PUBLIC_IMAGE}${event?.data.mobile_photo}`}
                     w="100%"

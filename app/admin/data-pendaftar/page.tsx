@@ -1,6 +1,7 @@
 "use client";
 
 import UpdateAnnouncementModal from "@/app/admin/data-pendaftar/UpdateAnnouncementModal";
+import AdminHeader from "@/components/AdminHeader";
 import { useGetAnnouncement } from "@/hooks/useAnnouncement";
 import { useGetStatus } from "@/hooks/useStatus";
 import { UpdateAnnouncementPayload } from "@/services/announcement/announcement";
@@ -143,7 +144,7 @@ const DataRegistrantPage = () => {
     </Table.Tr>
   ));
 
-  const rowsLoading = [...Array(5)].map((_, index) => (
+  const rowsLoading = [...Array(10)].map((_, index) => (
     <Table.Tr key={index + "pengelola"}>
       <Table.Td>
         <Skeleton height={20} />
@@ -170,68 +171,71 @@ const DataRegistrantPage = () => {
   ));
 
   return (
-    <Paper p="lg" radius={12}>
-      <Stack gap={40}>
-        <Flex justify="space-between" align="center">
-          <Text c="brand.9" size="lg" fw="bolder">
-            Daftar Pendaftar
-          </Text>
-          <TextInput
-            label="Cari"
-            radius="md"
-            miw={300}
-            variant="filled"
-            size="md"
-            leftSection={<IconSearch size={16} />}
-            {...form.getInputProps("search")}
-          />
-        </Flex>
-        <Divider />
-        <Table.ScrollContainer minWidth={"100%"}>
-          <Table striped highlightOnHover fz={rem(14)}>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>No.</Table.Th>
-                <Table.Th>Nama Pendaftar</Table.Th>
-                <Table.Th>No Hp</Table.Th>
-                <Table.Th>Tempat/Tgl.Lahir</Table.Th>
-                <Table.Th>Asal Daerah</Table.Th>
-                <Table.Th>Kampus/Sekolah</Table.Th>
-                <Table.Th>Status</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {isStatusLoading || isAnnouncementLoading ? rowsLoading : rows}
-            </Table.Tbody>
-            <Table.Caption>Data Pendaftar</Table.Caption>
-          </Table>
-          <Flex justify="flex-end" w="100%" align="center" gap={24} mt={24}>
-            <Select
-              w="100px"
-              value={displayCount}
-              onChange={(value) => setDisplayCount(value as string)}
-              data={[
-                { value: "10", label: "10" },
-                { value: "25", label: "25" },
-                { value: "50", label: "50" },
-                { value: "100", label: "100" },
-              ]}
-            />
-            <Pagination
-              total={data?.length}
-              value={activePage}
-              onChange={setPage}
+    <>
+      <AdminHeader />
+      <Paper p="lg" radius={12}>
+        <Stack gap={40}>
+          <Flex justify="space-between" align="center">
+            <Text c="brand.9" size="lg" fw="bolder">
+              Daftar Pendaftar
+            </Text>
+            <TextInput
+              label="Cari"
+              radius="md"
+              miw={300}
+              variant="filled"
+              size="md"
+              leftSection={<IconSearch size={16} />}
+              {...form.getInputProps("search")}
             />
           </Flex>
-        </Table.ScrollContainer>
-      </Stack>
+          <Divider />
+          <Table.ScrollContainer minWidth={"100%"}>
+            <Table striped highlightOnHover fz={rem(14)}>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>No.</Table.Th>
+                  <Table.Th>Nama Pendaftar</Table.Th>
+                  <Table.Th>No Hp</Table.Th>
+                  <Table.Th>Tempat/Tgl.Lahir</Table.Th>
+                  <Table.Th>Asal Daerah</Table.Th>
+                  <Table.Th>Kampus/Sekolah</Table.Th>
+                  <Table.Th>Status</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                {isStatusLoading || isAnnouncementLoading ? rowsLoading : rows}
+              </Table.Tbody>
+              <Table.Caption>Data Pendaftar</Table.Caption>
+            </Table>
+            <Flex justify="flex-end" w="100%" align="center" gap={24} mt={24}>
+              <Select
+                w="100px"
+                value={displayCount}
+                onChange={(value) => setDisplayCount(value as string)}
+                data={[
+                  { value: "10", label: "10" },
+                  { value: "25", label: "25" },
+                  { value: "50", label: "50" },
+                  { value: "100", label: "100" },
+                ]}
+              />
+              <Pagination
+                total={data?.length}
+                value={activePage}
+                onChange={setPage}
+              />
+            </Flex>
+          </Table.ScrollContainer>
+        </Stack>
 
-      <UpdateAnnouncementModal
-        updateAnnouncementOpen={editOpen}
-        closeUpdateAnnouncement={closeEditAnnouncement}
-        payload={selectedAnnouncement}
-      />
-    </Paper>
+        <UpdateAnnouncementModal
+          updateAnnouncementOpen={editOpen}
+          closeUpdateAnnouncement={closeEditAnnouncement}
+          payload={selectedAnnouncement}
+        />
+      </Paper>
+    </>
   );
 };
 

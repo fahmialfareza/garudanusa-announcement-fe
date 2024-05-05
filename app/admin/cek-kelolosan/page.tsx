@@ -1,5 +1,6 @@
 "use client";
 
+import AdminHeader from "@/components/AdminHeader";
 import { useCheckStatus } from "@/hooks/useCheckStatus";
 import { useGetEvent } from "@/hooks/useGetEvent";
 import { CheckStatusPayload } from "@/services/announcement/announcement";
@@ -50,6 +51,7 @@ export default function AdminCheckResult() {
 
   return (
     <Box h="screen">
+      <AdminHeader />
       <Stack gap={48} justify="center" align="stretch" h={"100%"}>
         <Flex h="70%">
           <Card p={28} withBorder w="100%" radius="lg">

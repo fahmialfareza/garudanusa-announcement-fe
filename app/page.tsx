@@ -15,20 +15,31 @@ import {
   Paper,
   Stack,
   Text,
+  em,
 } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useDocumentTitle, useMediaQuery } from "@mantine/hooks";
 import { IconUserCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export default function Home() {
   const { event, isLoading, isPastDate } = useGetEvent();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
   const home = event?.data;
   useDocumentTitle("GARUDA NUSA");
 
   return (
     <Box>
       <Grid gutter={0}>
-        <Grid.Col span={6} h="100vh" p={0} m={0}>
+        <Grid.Col
+          span={isMobile ? 12 : 6}
+          h="100vh"
+          p={0}
+          m={0}
+          style={{
+            display: `${isMobile ? "none" : "block"}`,
+          }}
+        >
           {home?.desktop_photo ? (
             <Image
               src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
@@ -39,7 +50,7 @@ export default function Home() {
             <Box h={"100%"} bg="gray" />
           )}
         </Grid.Col>
-        <Grid.Col span={6} px={24} pt={24}>
+        <Grid.Col span={isMobile ? 12 : 6} px={24} pt={24}>
           <Stack gap={48} justify="center" align="stretch" h={"100%"}>
             <Flex justify="space-between" w="100%" mb={24}>
               <Text size="xl" c="brand.9">
@@ -55,7 +66,7 @@ export default function Home() {
               </ActionIcon>
             </Flex>
             <Flex h="70%">
-              <Card p={28} withBorder w="100%" radius="lg">
+              <Card p={isMobile ? 16 : 28} withBorder w="100%" radius="lg">
                 <Stack
                   w="100%"
                   h="100%"
@@ -65,7 +76,13 @@ export default function Home() {
                   my={48}
                 >
                   <Image src="/assets/logo.png" alt="logo" maw={480} />
-                  <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
+                  <Text
+                    c="brand.9"
+                    size={isMobile ? "md" : "xl"}
+                    fw="bold"
+                    ta="center"
+                    maw={400}
+                  >
                     {home?.event_name}
                   </Text>
                   {isPastDate ? (
@@ -74,6 +91,7 @@ export default function Home() {
                     <CountDown
                       targetDate={dayjs(home?.date).toDate()}
                       isLoading={isLoading}
+                      isMobile={isMobile}
                     />
                   )}
                 </Stack>

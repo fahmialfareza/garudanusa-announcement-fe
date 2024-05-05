@@ -2,6 +2,7 @@
 
 import CreateStatusModal from "@/app/admin/status/CreateStatusModal";
 import UpdateStatusModal from "@/app/admin/status/UpdateStatusModal";
+import AdminHeader from "@/components/AdminHeader";
 import PreviewEditor from "@/components/PreviewEditor";
 import { useDeleteStatus, useGetStatus } from "@/hooks/useStatus";
 import { UpdateStatusPayload } from "@/services/status/status";
@@ -44,12 +45,7 @@ const StatusSettingsPage = () => {
 
   return (
     <Stack>
-      <Paper bg="teal.1" p="lg" radius={12}>
-        <Text c="teal.9" size="xl" fw="bolder" ta="center">
-          SISTEM INFORMASI KELOLOSAN GARUDA NUSA YOUTH ACTION(GNYA) #9 LABUAN
-          BAJO
-        </Text>
-      </Paper>
+      <AdminHeader />
       <Paper p="lg" radius={12}>
         <Flex justify="space-between" align="center">
           <Text c="brand.9" size="lg" fw="bolder">
