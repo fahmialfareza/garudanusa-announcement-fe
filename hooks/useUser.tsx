@@ -25,9 +25,9 @@ export const useGetUser = () => {
       queryFn: getCurrentUser,
       meta: {
         onerror: () => {
-          // setToken(null);
-          // localStorage.clear();
-          // router.push("/login");
+          setToken(null);
+          localStorage.clear();
+          router.push("/login");
         },
       },
     });
