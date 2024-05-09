@@ -3,7 +3,7 @@ import { login, LoginPayload, LoginResponse } from "@/services/auth/auth";
 import { useAuthStore } from "@/store/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export const useLogin = () => {
