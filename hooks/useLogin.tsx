@@ -30,7 +30,7 @@ export const useLogin = () => {
     onError: (error) => {
       toast.dismiss();
       const dataError = error.response as unknown as AxiosErrorResponse;
-      toast.error(dataError.message || "Login failed");
+      toast.error(dataError.message);
     },
   });
 
