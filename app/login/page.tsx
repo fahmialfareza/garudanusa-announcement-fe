@@ -83,57 +83,60 @@ const Login = () => {
             <Stack gap={48} justify="center" align="stretch" h={"100%"}>
               <Flex h={isMobile ? "80%" : "70%"}>
                 <Card p={28} withBorder w="100%" radius="lg">
-                  <Stack
-                    w="100%"
-                    h="100%"
-                    justify="center"
-                    align="center"
-                    gap={40}
-                    my={48}
+                  <form
+                    onSubmit={form.onSubmit(handleSubmit)}
+                    style={{ width: "100%", height: "100%" }}
                   >
-                    <Image src="/assets/logo.png" alt="logo" maw={300} />
-
-                    <TextInput
-                      label="Nama Pengguna"
-                      withAsterisk
-                      radius="xl"
-                      variant="filled"
+                    <Stack
                       w="100%"
-                      size="xl"
-                      autoComplete="bday-day"
-                      placeholder="Masukan nama pengguna"
-                      error={form.errors.username}
-                      key={form.key("username")}
-                      {...form.getInputProps("username")}
-                    />
-                    <PasswordInput
-                      label="Sandi"
-                      withAsterisk
-                      radius="xl"
-                      variant="filled"
-                      autoComplete="bday-day"
-                      w="100%"
-                      size="xl"
-                      placeholder="Masukan sandi"
-                      key={form.key("password")}
-                      {...form.getInputProps("password")}
-                    />
-                    <Button
-                      variant="filled"
-                      color="brand.9"
-                      onClick={() => {
-                        form.onSubmit(handleSubmit)();
-                      }}
-                      size="lg"
-                      radius="xl"
-                      tt="uppercase"
-                      fullWidth
+                      h="100%"
+                      justify="center"
+                      align="center"
+                      gap={40}
+                      my={48}
                     >
-                      MASUK
-                    </Button>
-                  </Stack>
+                      <Image src="/assets/logo.png" alt="logo" maw={300} />
+                      <TextInput
+                        label="Nama Pengguna"
+                        withAsterisk
+                        radius="xl"
+                        variant="filled"
+                        w="100%"
+                        size="xl"
+                        autoComplete="bday-day"
+                        placeholder="Masukan nama pengguna"
+                        error={form.errors.username}
+                        key={form.key("username")}
+                        {...form.getInputProps("username")}
+                      />
+                      <PasswordInput
+                        label="Sandi"
+                        withAsterisk
+                        radius="xl"
+                        variant="filled"
+                        autoComplete="bday-day"
+                        w="100%"
+                        size="xl"
+                        placeholder="Masukan sandi"
+                        key={form.key("password")}
+                        {...form.getInputProps("password")}
+                      />
+                      <Button
+                        variant="filled"
+                        color="brand.9"
+                        type="submit"
+                        size="lg"
+                        radius="xl"
+                        tt="uppercase"
+                        fullWidth
+                      >
+                        MASUK
+                      </Button>
+                    </Stack>
+                  </form>
                 </Card>
               </Flex>
+
               <Center>
                 <Text
                   maw={400}
