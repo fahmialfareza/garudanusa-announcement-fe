@@ -18,12 +18,13 @@ import {
   Stack,
   Text,
   TextInput,
+  em,
   rem,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useDocumentTitle, useMediaQuery } from "@mantine/hooks";
 import { Link, RichTextEditor } from "@mantine/tiptap";
 import { IconColorPicker, IconPhotoUp } from "@tabler/icons-react";
 import { Color } from "@tiptap/extension-color";
@@ -53,6 +54,7 @@ const ProfilePage = () => {
   const [desktopImage, setDesktopImage] = useState<FileWithPath[]>([]);
   const [mobileImage, setMobileImage] = useState<FileWithPath[]>([]);
   const { submitAnnouncement } = useSubmitAnnouncement();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const { event, isLoading } = useGetEvent();
 
@@ -278,7 +280,7 @@ const ProfilePage = () => {
             <Text fw={500} mb={28}>
               Background
             </Text>
-            <SimpleGrid cols={4}>
+            <SimpleGrid cols={isMobile ? 2 : 4}>
               <Stack>
                 <Text fw={500}>Desktop </Text>
                 <Dropzone

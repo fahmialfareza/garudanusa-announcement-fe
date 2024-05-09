@@ -10,9 +10,11 @@ import {
   Stack,
   Text,
   TextInput,
+  em,
   rem,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useMediaQuery } from "@mantine/hooks";
 import { Link, RichTextEditor } from "@mantine/tiptap";
 import { IconColorPicker } from "@tabler/icons-react";
 import { Color } from "@tiptap/extension-color";
@@ -38,6 +40,7 @@ const UpdateStatusModal = ({
   payload,
 }: CreateStatusModalProps) => {
   const { updateStatus } = useUpdateStatus();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const form = useForm({
     initialValues: {
@@ -104,19 +107,19 @@ const UpdateStatusModal = ({
       centered
     >
       <Stack p={12}>
-        <Flex justify="space-between" align="end" gap={24}>
+        <Flex justify="space-between" align="end" gap={24} wrap="wrap">
           <TextInput
             label="Nama Status"
             withAsterisk
             radius="lg"
             variant="filled"
-            w="50%"
+            w={isMobile ? "100%" : "50%"}
             size="lg"
             placeholder="Masukan nama status"
             key={form.key("status")}
             {...form.getInputProps("status")}
           />
-          <Stack w="50%" gap={2}>
+          <Stack w={isMobile ? "100%" : "50%"} gap={2}>
             <Text c="#101113" fw={600}>
               Pilih Warna
             </Text>

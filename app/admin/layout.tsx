@@ -105,7 +105,7 @@ export default function AdminLayout({
         </AppShell.Header>
         <AppShell.Navbar p="md" withBorder={false}>
           <Box p={16}>
-            <UnstyledButton>
+            <UnstyledButton onClick={toggle}>
               <Image src="/assets/logo.png" alt="logo" />
             </UnstyledButton>
           </Box>
@@ -120,6 +120,7 @@ export default function AdminLayout({
                   radius="xl"
                   variant={pathname.includes(item.path) ? "filled" : "subtle"}
                   component={Link}
+                  onClick={toggle}
                   fullWidth
                   justify="left"
                   href={item.path}

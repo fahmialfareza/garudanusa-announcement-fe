@@ -4,26 +4,28 @@ import CreateAdminUserModal from "@/app/admin/pengelola/CreateAdminUserModal";
 import AdminHeader from "@/components/AdminHeader";
 import { useDeleteUser, useGetUsers } from "@/hooks/useUser";
 import {
-  Paper,
-  Text,
-  Button,
-  Flex,
-  Table,
-  Stack,
-  Group,
   ActionIcon,
+  Button,
   Divider,
+  Flex,
+  Group,
   Modal,
+  Paper,
   Skeleton,
+  Stack,
+  Table,
+  Text,
+  em,
 } from "@mantine/core";
-import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
-import { IconPencil, IconTrashX } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useDisclosure, useDocumentTitle, useMediaQuery } from "@mantine/hooks";
+import { IconTrashX } from "@tabler/icons-react";
+import { useState } from "react";
 
 const UserAdminPage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Pengelola");
   const { users, isLoading } = useGetUsers();
   const { deleteUser } = useDeleteUser();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const [
     createOpen,
@@ -48,15 +50,6 @@ const UserAdminPage = () => {
       <Table.Td fw={500}>{item.username}</Table.Td>
       <Table.Td>
         <Group gap={16}>
-          {/* <ActionIcon
-            size="lg"
-            radius="xl"
-            color="yellow.9"
-            onClick={() => {
-            }}
-          >
-            <IconPencil />
-          </ActionIcon> */}
           <ActionIcon
             size="lg"
             radius="xl"
@@ -95,7 +88,7 @@ const UserAdminPage = () => {
       <AdminHeader />
       <Paper p="lg" radius={12} mih={"50vh"}>
         <Stack gap={40}>
-          <Flex justify="space-between" align="center">
+          <Flex justify="space-between" align="center" wrap="wrap" gap={20}>
             <Text c="brand.9" size="lg" fw="bolder">
               Daftar Pengelola
             </Text>
@@ -103,6 +96,7 @@ const UserAdminPage = () => {
               variant="filled"
               radius="xl"
               color="brand.9"
+              fullWidth={isMobile}
               size="lg"
               onClick={clickCreateAdminUser}
             >

@@ -4,14 +4,12 @@ import {
   checkStatus,
 } from "@/services/announcement/announcement";
 import { AxiosErrorResponse } from "@/services/api";
-import { useResultStore } from "@/store/status";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export const useCheckStatus = () => {
-  const { setResult } = useResultStore();
+export const useCheckStatus = (isParams: boolean) => {
   const router = useRouter();
   const { mutate, isPending, isError, error, data } = useMutation<
     AnnouncementResponse,
@@ -20,13 +18,16 @@ export const useCheckStatus = () => {
   >({
     mutationFn: checkStatus,
     onMutate: () => {
-      toast.loading("Checking data ...");
+      if (!isParams) {
+        toast.loading("Checking data ...");
+      }
     },
     onSuccess: (data) => {
-      setResult(data);
       toast.dismiss();
-      toast.success("Data ditemukan");
-      router.push("/result");
+      if (!isParams) {
+        toast.success("Data ditemukan");
+      }
+      router.push("/result/" + data.data.phone);
     },
     onError: (error) => {
       toast.dismiss();

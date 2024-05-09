@@ -9,19 +9,20 @@ import {
   Flex,
   List,
   Paper,
-  Progress,
   Stack,
   Text,
   ThemeIcon,
+  em,
   rem,
 } from "@mantine/core";
 import { Dropzone, FileWithPath, MS_EXCEL_MIME_TYPE } from "@mantine/dropzone";
+import { useMediaQuery } from "@mantine/hooks";
 import { IconCircleCheck, IconFileSpreadsheet } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 const UploadDataPage = () => {
   const [dataRegistrant, setDataRegistrant] = useState<FileWithPath[]>([]);
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const { uploadFile, isSuccess } = useFileUpload();
 
@@ -48,15 +49,16 @@ const UploadDataPage = () => {
     <>
       <AdminHeader />
 
-      <Paper p="lg" radius={12} h="80vh">
+      <Paper p="lg" radius={12} mih="80vh">
         <Stack gap={24}>
-          <Flex justify="space-between" align="center">
+          <Flex justify="space-between" align="center" wrap="wrap" gap={20}>
             <Text fw={500} size="lg" c="brand.9">
               Upload File Pendaftar{" "}
             </Text>
             <Button
               variant="filled"
               color="brand.9"
+              fullWidth={isMobile}
               size="lg"
               radius="xl"
               onClick={() => handleUpload(dataRegistrant)}

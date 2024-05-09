@@ -62,7 +62,13 @@ const Login = () => {
     <AuthProvider>
       <Box>
         <Grid gutter={0}>
-          <Grid.Col span={6} h="100vh">
+          <Grid.Col
+            span={6}
+            h="100vh"
+            style={{
+              display: `${isMobile ? "none" : "block"}`,
+            }}
+          >
             {home?.desktop_photo ? (
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
@@ -73,9 +79,9 @@ const Login = () => {
               <Box h={"100%"} bg="gray" />
             )}
           </Grid.Col>
-          <Grid.Col span={6} px={24}>
+          <Grid.Col span={isMobile ? 12 : 6} px={24}>
             <Stack gap={48} justify="center" align="stretch" h={"100%"}>
-              <Flex h="70%">
+              <Flex h={isMobile ? "80%" : "70%"}>
                 <Card p={28} withBorder w="100%" radius="lg">
                   <Stack
                     w="100%"
@@ -117,7 +123,6 @@ const Login = () => {
                       color="brand.9"
                       onClick={() => {
                         form.onSubmit(handleSubmit)();
-                        console.log(form.values);
                       }}
                       size="lg"
                       radius="xl"

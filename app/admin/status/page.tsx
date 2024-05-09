@@ -16,14 +16,16 @@ import {
   Paper,
   Stack,
   Text,
+  em,
 } from "@mantine/core";
-import { useDisclosure, useDocumentTitle } from "@mantine/hooks";
+import { useDisclosure, useDocumentTitle, useMediaQuery } from "@mantine/hooks";
 import { IconPencil, IconTrashX } from "@tabler/icons-react";
 import { useState } from "react";
 
 const StatusSettingsPage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Status");
   const { deleteStatus } = useDeleteStatus();
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const [selectedStatus, setSelectedStatus] = useState<UpdateStatusPayload>({
     id: null,
@@ -47,7 +49,7 @@ const StatusSettingsPage = () => {
     <Stack>
       <AdminHeader />
       <Paper p="lg" radius={12}>
-        <Flex justify="space-between" align="center">
+        <Flex justify="space-between" align="center" wrap="wrap" gap={20}>
           <Text c="brand.9" size="lg" fw="bolder">
             Pengaturan Status Peserta
           </Text>
@@ -55,6 +57,7 @@ const StatusSettingsPage = () => {
             variant="filled"
             radius="xl"
             color="brand.9"
+            fullWidth={isMobile}
             size="lg"
             onClick={clickCreateStatus}
           >

@@ -175,7 +175,7 @@ const DataRegistrantPage = () => {
       <AdminHeader />
       <Paper p="lg" radius={12}>
         <Stack gap={40}>
-          <Flex justify="space-between" align="center">
+          <Flex justify="space-between" align="center" wrap="wrap" gap={20}>
             <Text c="brand.9" size="lg" fw="bolder">
               Daftar Pendaftar
             </Text>
