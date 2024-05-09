@@ -23,7 +23,7 @@ export default function AdminCheckResult() {
   useDocumentTitle("Admin | Cek Kelolosan");
   const { event } = useGetEvent();
   const home = event?.data;
-  const { checkStatus, status } = useCheckStatus();
+  const { checkStatus, status } = useCheckStatus(false);
 
   const form = useForm<CheckStatusPayload>({
     mode: "uncontrolled",
