@@ -29,9 +29,7 @@ import { useEffect, useRef } from "react";
 const ResultPage = ({ params }: { params: { slug: string } }) => {
   useDocumentTitle(`GARUDA NUSA | Results(${params.slug})`);
 
-  const regex = /^08\d{7,10}$/;
-
-  const { checkStatus, isLoading, status } = useCheckStatus(true);
+  const { checkStatus, isLoading, status, isError } = useCheckStatus(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { event } = useGetEvent();
@@ -68,7 +66,7 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   useEffect(() => {
-    if (params.slug && regex.test(params.slug)) {
+    if (params.slug) {
       checkStatus({
         numberPhone: params.slug,
       });
@@ -107,11 +105,11 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
     );
   }
 
-  if (!regex.test(params.slug)) {
+  if (isError) {
     return (
       <Container>
         <Center>
-          <Title>Nomor telepon tidak valid</Title>
+          <Title>Terjadi kesalahan</Title>
         </Center>
       </Container>
     );

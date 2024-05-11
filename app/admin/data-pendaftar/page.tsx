@@ -31,7 +31,7 @@ import { useState } from "react";
 const DataRegistrantPage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Data Pendaftar");
   const { status, isLoading: isStatusLoading } = useGetStatus();
-  const [displayCount, setDisplayCount] = useState("10");
+  const [displayCount, setDisplayCount] = useState("50");
   const [activePage, setPage] = useState(1);
   const { announcement, isLoading: isAnnouncementLoading } =
     useGetAnnouncement();
@@ -214,10 +214,12 @@ const DataRegistrantPage = () => {
                 value={displayCount}
                 onChange={(value) => setDisplayCount(value as string)}
                 data={[
-                  { value: "10", label: "10" },
-                  { value: "25", label: "25" },
                   { value: "50", label: "50" },
                   { value: "100", label: "100" },
+                  { value: "200", label: "200" },
+                  { value: "300", label: "300" },
+                  { value: "400", label: "400" },
+                  { value: "500", label: "500" },
                 ]}
               />
               <Pagination

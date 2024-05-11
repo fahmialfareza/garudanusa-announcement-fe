@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Paper, Text, Button } from "@mantine/core";
 import { Link } from "@/libs/router-event";

@@ -2,23 +2,23 @@
 
 import Announcement from "@/components/Announcement";
 import CountDown from "@/components/CountDown";
+import HomeFooter from "@/components/HomeFooter";
 import { useGetEvent } from "@/hooks/useGetEvent";
 import { Link } from "@/libs/router-event";
 import {
   ActionIcon,
+  Affix,
   Box,
   Card,
-  Center,
   Flex,
   Grid,
   Image,
-  Paper,
   Stack,
   Text,
   em,
 } from "@mantine/core";
 import { useDocumentTitle, useMediaQuery } from "@mantine/hooks";
-import { IconUserCircle } from "@tabler/icons-react";
+import { IconBrandWhatsapp, IconUserCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export default function Home() {
@@ -51,6 +51,20 @@ export default function Home() {
           )}
         </Grid.Col>
         <Grid.Col span={isMobile ? 12 : 6} px={24} pt={24}>
+          <Affix position={{ bottom: 20, right: 20 }}>
+            <ActionIcon
+              variant="filled"
+              color="green.5"
+              radius="xl"
+              size={60}
+              component={Link}
+              href="https://wa.me/+6285815330595"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconBrandWhatsapp size={48} />
+            </ActionIcon>
+          </Affix>
           <Stack gap={48} justify="center" align="stretch" h={"100%"}>
             <Flex justify="space-between" w="100%" mb={24}>
               <Text size="xl" c="brand.9">
@@ -65,43 +79,63 @@ export default function Home() {
                 <IconUserCircle />
               </ActionIcon>
             </Flex>
-            <Flex h="70%">
-              <Card p={isMobile ? 16 : 28} withBorder w="100%" radius="lg">
-                <Stack
-                  w="100%"
-                  h="100%"
-                  justify="center"
-                  align="center"
-                  gap={40}
-                  my={48}
-                >
-                  <Image src="/assets/logo.png" alt="logo" maw={480} />
-                  <Text
-                    c="brand.9"
-                    size={isMobile ? "md" : "xl"}
-                    fw="bold"
-                    ta="center"
-                    maw={400}
-                  >
-                    {home?.event_name}
-                  </Text>
-                  {isPastDate ? (
-                    <Announcement />
-                  ) : (
-                    <CountDown
-                      targetDate={dayjs(home?.date).toDate()}
-                      isLoading={isLoading}
-                      isMobile={isMobile}
+            <Card
+              p={isMobile ? 16 : 28}
+              withBorder
+              w="100%"
+              radius="lg"
+              style={{
+                overflowY: "auto",
+              }}
+            >
+              <Stack
+                w="100%"
+                h="100%"
+                justify="center"
+                align="center"
+                gap={40}
+                my={48}
+              >
+                <Flex justify="space-between" w="100%">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="logo"
+                    maw={isMobile ? 150 : 200}
+                    fit="contain"
+                  />
+                  {home?.mobile_photo ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.mobile_photo}`}
+                      alt="Logo Kegiatan"
+                      maw={isMobile ? 80 : 100}
+                      fit="contain"
                     />
+                  ) : (
+                    <Box h={"100%"} maw={100} bg="gray" />
                   )}
-                </Stack>
-              </Card>
-            </Flex>
-            <Center>
-              <Text maw={400} ta="center" fw="bold" c="brand.9" tt="uppercase">
-                {home?.header_footer_name} © {dayjs().format("YYYY")}
-              </Text>
-            </Center>
+                </Flex>
+
+                <Text
+                  c="brand.9"
+                  size={isMobile ? "md" : "xl"}
+                  fw="bold"
+                  ta="center"
+                  maw={400}
+                >
+                  {home?.event_name}
+                </Text>
+                {isPastDate ? (
+                  <Announcement />
+                ) : (
+                  <CountDown
+                    targetDate={dayjs(home?.date).toDate()}
+                    isLoading={isLoading}
+                    isMobile={isMobile}
+                  />
+                )}
+              </Stack>
+            </Card>
+            <HomeFooter headerFooterName={home?.header_footer_name} />
           </Stack>
         </Grid.Col>
       </Grid>

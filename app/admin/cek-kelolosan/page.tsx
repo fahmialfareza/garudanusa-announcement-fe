@@ -36,10 +36,6 @@ export default function AdminCheckResult() {
         if (!value.length) {
           return "Nomor telepon tidak boleh kosong";
         }
-        const regex = /^08\d{7,10}$/;
-        if (!regex.test(value)) {
-          return "Nomor telepon tidak valid";
-        }
         return null;
       },
     },
@@ -54,7 +50,15 @@ export default function AdminCheckResult() {
       <AdminHeader />
       <Stack gap={48} justify="center" align="stretch" h={"100%"}>
         <Flex h="70%">
-          <Card p={28} withBorder w="100%" radius="lg">
+          <Card
+            p={28}
+            withBorder
+            w="100%"
+            radius="lg"
+            style={{
+              overflowY: "auto",
+            }}
+          >
             <Stack
               w="100%"
               h="100%"

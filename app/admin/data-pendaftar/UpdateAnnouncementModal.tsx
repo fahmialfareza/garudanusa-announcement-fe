@@ -90,9 +90,8 @@ const UpdateAnnouncementModal = ({
             error={form.errors.name}
             {...form.getInputProps("name")}
           />
-          <NumberInput
+          <TextInput
             label="No Hp"
-            hideControls
             withAsterisk
             radius="md"
             variant="filled"

@@ -331,7 +331,7 @@ const ProfilePage = () => {
                 ) : null}
               </Box>
               <Stack>
-                <Text fw={500}>Mobile </Text>
+                <Text fw={500}>Logo Kegiatan </Text>
                 <Dropzone
                   onDrop={setMobileImage}
                   maxSize={5 * 1024 ** 2}

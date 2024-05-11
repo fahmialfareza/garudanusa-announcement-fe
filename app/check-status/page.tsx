@@ -1,11 +1,13 @@
 "use client";
 
+import HomeFooter from "@/components/HomeFooter";
 import { useCheckStatus } from "@/hooks/useCheckStatus";
 import { useGetEvent } from "@/hooks/useGetEvent";
 import { Link } from "@/libs/router-event";
 import { CheckStatusPayload } from "@/services/announcement/announcement";
 import {
   ActionIcon,
+  Affix,
   Box,
   Button,
   Card,
@@ -21,8 +23,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconUserCircle } from "@tabler/icons-react";
-import dayjs from "dayjs";
+import { IconBrandWhatsapp, IconUserCircle } from "@tabler/icons-react";
 
 export default function CheckResult() {
   const { event, isPastDate } = useGetEvent();
@@ -40,10 +41,6 @@ export default function CheckResult() {
       numberPhone: (value) => {
         if (!value.length) {
           return "Nomor telepon tidak boleh kosong";
-        }
-        const regex = /^08\d{7,10}$/;
-        if (!regex.test(value)) {
-          return "Nomor telepon tidak valid";
         }
         return null;
       },
@@ -75,6 +72,20 @@ export default function CheckResult() {
           )}
         </Grid.Col>
         <Grid.Col span={isMobile ? 12 : 6} px={24} pt={24}>
+          <Affix position={{ bottom: 20, right: 20 }}>
+            <ActionIcon
+              variant="filled"
+              color="green.5"
+              radius="xl"
+              size={60}
+              component={Link}
+              href="https://wa.me/+6285815330595"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconBrandWhatsapp size={48} />
+            </ActionIcon>
+          </Affix>
           <Stack gap={48} justify="center" align="stretch" h={"100%"}>
             <Flex justify="space-between" w="100%" mb={24}>
               <Text size="xl" c="brand.9">
@@ -90,7 +101,15 @@ export default function CheckResult() {
               </ActionIcon>
             </Flex>
             <Flex h={isMobile ? "80%" : "70%"}>
-              <Card p={28} withBorder w="100%" radius="lg">
+              <Card
+                p={28}
+                withBorder
+                w="100%"
+                radius="lg"
+                style={{
+                  overflowY: "auto",
+                }}
+              >
                 <Stack
                   w="100%"
                   h="100%"
@@ -99,7 +118,24 @@ export default function CheckResult() {
                   gap={40}
                   my={48}
                 >
-                  <Image src="/assets/logo.png" alt="logo" maw={360} />
+                  <Flex justify="space-between" w="100%">
+                    <Image
+                      src="/assets/logo.png"
+                      alt="logo"
+                      maw={isMobile ? 150 : 200}
+                      fit="contain"
+                    />
+                    {home?.mobile_photo ? (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.mobile_photo}`}
+                        alt="Logo Kegiatan"
+                        maw={isMobile ? 80 : 100}
+                        fit="contain"
+                      />
+                    ) : (
+                      <Box h={"100%"} maw={100} bg="gray" />
+                    )}
+                  </Flex>
                   <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
                     {home?.event_name}
                   </Text>
@@ -164,11 +200,7 @@ export default function CheckResult() {
                 </Stack>
               </Card>
             </Flex>
-            <Center>
-              <Text maw={400} ta="center" fw="bold" c="brand.9" tt="uppercase">
-                {home?.header_footer_name} © {dayjs().format("YYYY")}
-              </Text>
-            </Center>
+            <HomeFooter headerFooterName={home?.header_footer_name} />
           </Stack>
         </Grid.Col>
       </Grid>

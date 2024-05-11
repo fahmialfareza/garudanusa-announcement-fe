@@ -27,7 +27,7 @@ const CountDown = ({
         ta="center"
         mb={16}
       >
-        WAKTU PENGUMUMAN KELOLOSAN
+        WAKTU PENGUMUMAN KELOLOSAN (WIB)
       </Text>
       <Group justify="center">
         <Skeleton radius="lg" w={80} h={36} visible={isLoading}>
