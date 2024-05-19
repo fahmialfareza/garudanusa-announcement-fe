@@ -30,12 +30,11 @@ export default function Home() {
   useDocumentTitle("GARUDA NUSA");
 
   return (
-    <Grid>
+    <Grid mah="100vh">
       <Grid.Col
         span={6}
-        p={0}
-        h="100vh"
-        m={0}
+        py={0}
+        my={0}
         style={{
           display: `${isMobile ? "none" : "block"}`,
         }}
@@ -50,7 +49,7 @@ export default function Home() {
           <Box h={"100%"} bg="gray" />
         )}
       </Grid.Col>
-      <Grid.Col span={isMobile ? 12 : 6} px={24} py={24}>
+      <Grid.Col span={isMobile ? 12 : 6} maw="100vh" px={rem(24)} py={0} my={0}>
         <Affix position={{ bottom: 20, right: 20 }}>
           <ActionIcon
             variant="filled"
@@ -65,8 +64,8 @@ export default function Home() {
             <IconBrandWhatsapp size={48} />
           </ActionIcon>
         </Affix>
-        <Stack gap={rem(48)} justify="center" align="stretch" h={"100%"}>
-          <Flex justify="space-between" w="100%" mb={24}>
+        <Stack justify="space-around" h="100vh" align="stretch">
+          <Flex justify="space-between" w="100%" mb={rem(24)} mt={rem(24)}>
             <Text size="xl" c="brand.9">
               GARUDA NUSA
             </Text>
@@ -79,15 +78,14 @@ export default function Home() {
               <IconUserCircle />
             </ActionIcon>
           </Flex>
-          <Flex h={isMobile ? "80%" : "70%"}>
+          <Flex h="100%">
             <Card p={isMobile ? 16 : 28} withBorder w="100%" radius="lg">
               <Stack
                 w="100%"
                 h="100%"
-                justify="center"
+                justify="space-between"
                 align="center"
                 gap={rem(40)}
-                py={rem(40)}
               >
                 <Flex justify="space-between" w="100%">
                   <Image
@@ -107,7 +105,6 @@ export default function Home() {
                     <Box h={"100%"} maw={100} bg="gray" />
                   )}
                 </Flex>
-
                 <Text
                   c="brand.9"
                   size={isMobile ? "md" : "xl"}
@@ -126,10 +123,10 @@ export default function Home() {
                     isMobile={isMobile}
                   />
                 )}
+                <HomeFooter headerFooterName={home?.header_footer_name} />
               </Stack>
             </Card>
           </Flex>
-          <HomeFooter headerFooterName={home?.header_footer_name} />
         </Stack>
       </Grid.Col>
     </Grid>

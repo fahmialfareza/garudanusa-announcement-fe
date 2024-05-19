@@ -56,9 +56,8 @@ export default function CheckResult() {
     <Grid p={0} m={0}>
       <Grid.Col
         span={6}
-        h="100vh"
-        p={0}
-        m={0}
+        py={0}
+        my={0}
         style={{
           display: `${isMobile ? "none" : "block"}`,
         }}
@@ -73,7 +72,7 @@ export default function CheckResult() {
           <Box h={"100%"} bg="gray" />
         )}
       </Grid.Col>
-      <Grid.Col span={isMobile ? 12 : 6} px={24} py={24}>
+      <Grid.Col span={isMobile ? 12 : 6} maw="100vh" px={rem(24)} py={0} my={0}>
         <Affix position={{ bottom: 20, right: 20 }}>
           <ActionIcon
             variant="filled"
@@ -88,8 +87,8 @@ export default function CheckResult() {
             <IconBrandWhatsapp size={48} />
           </ActionIcon>
         </Affix>
-        <Stack gap={48} justify="center" align="stretch" h={"100%"}>
-          <Flex justify="space-between" w="100%" mb={24}>
+        <Stack justify="space-around" align="stretch">
+          <Flex justify="space-between" w="100%" mb={rem(24)} mt={rem(24)}>
             <Text size="xl" c="brand.9">
               GARUDA NUSA
             </Text>
@@ -102,15 +101,14 @@ export default function CheckResult() {
               <IconUserCircle />
             </ActionIcon>
           </Flex>
-          <Flex h={isMobile ? "80%" : "70%"}>
+          <Flex h="88%">
             <Card p={28} withBorder w="100%" radius="lg">
               <Stack
                 w="100%"
                 h="100%"
-                justify="center"
+                justify="space-between"
                 align="center"
                 gap={rem(40)}
-                py={rem(40)}
               >
                 <Flex justify="space-between" w="100%">
                   <Image
@@ -191,10 +189,10 @@ export default function CheckResult() {
                     </Button>
                   </Stack>
                 </Center>
+                <HomeFooter headerFooterName={home?.header_footer_name} />
               </Stack>
             </Card>
           </Flex>
-          <HomeFooter headerFooterName={home?.header_footer_name} />
         </Stack>
       </Grid.Col>
     </Grid>

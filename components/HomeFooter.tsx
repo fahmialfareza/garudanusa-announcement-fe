@@ -1,15 +1,13 @@
 "use client";
-import { Center, Stack, Flex, ActionIcon, Text } from "@mantine/core";
+import { ActionIcon, Center, Flex, Stack, Text } from "@mantine/core";
 import {
-  IconBrandWhatsapp,
   IconBrandGmail,
   IconBrandInstagram,
-  IconBrandYoutube,
   IconBrandTiktok,
+  IconBrandYoutube,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React from "react";
 
 interface HomeFooterProps {
   headerFooterName: string | undefined;

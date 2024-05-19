@@ -7,6 +7,7 @@ import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
+import Image from "@tiptap/extension-image";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { Color } from "@tiptap/extension-color";
@@ -29,6 +30,10 @@ const PreviewEditor = ({ content }: PreviewEditorProps) => {
       Color,
       TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Image.configure({
+        inline: true,
+        allowBase64: true,
+      }),
     ],
     content,
   });

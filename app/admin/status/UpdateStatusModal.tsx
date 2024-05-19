@@ -16,9 +16,10 @@ import {
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
 import { Link, RichTextEditor } from "@mantine/tiptap";
-import { IconColorPicker } from "@tabler/icons-react";
+import { IconColorPicker, IconPhoto } from "@tabler/icons-react";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
+import Image from "@tiptap/extension-image";
 import SubScript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import TextAlign from "@tiptap/extension-text-align";
@@ -26,7 +27,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 interface CreateStatusModalProps {
   editOpen: boolean;
@@ -66,6 +67,10 @@ const UpdateStatusModal = ({
       Color,
       TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Image.configure({
+        inline: true,
+        allowBase64: true,
+      }),
     ],
     content: payload.message,
     onUpdate: ({ editor }) => {
@@ -96,6 +101,26 @@ const UpdateStatusModal = ({
     editor?.commands.setContent(payload?.message as string);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload]);
+
+  const addImage = useCallback(() => {
+    const url = window.prompt("Masukan URL Gambar");
+
+    if (url && editor) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  }, [editor]);
+
+  function InsertImageStatus() {
+    return (
+      <RichTextEditor.Control
+        onClick={addImage}
+        aria-label="Insert image status"
+        title="Insert image status"
+      >
+        <IconPhoto stroke={1.5} size="1rem" />
+      </RichTextEditor.Control>
+    );
+  }
 
   return (
     <Modal
@@ -261,6 +286,8 @@ const UpdateStatusModal = ({
                 <RichTextEditor.H3 />
                 <RichTextEditor.H4 />
               </RichTextEditor.ControlsGroup>
+
+              <InsertImageStatus />
 
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Blockquote />
