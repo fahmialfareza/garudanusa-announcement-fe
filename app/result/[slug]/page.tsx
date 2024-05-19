@@ -219,15 +219,15 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
                       {status?.data?.status}
                     </Badge>
                   </Center>
+                  <Stack gap={24}>
+                    {!isLoading ? (
+                      <>
+                        <PreviewEditor content={status?.data?.message} />
+                        <PreviewEditor content={event?.data?.note} />
+                      </>
+                    ) : null}
+                  </Stack>
                 </Stack>
-              </Stack>
-              <Stack gap={24}>
-                {!isLoading ? (
-                  <>
-                    <PreviewEditor content={status?.data?.message} />
-                    <PreviewEditor content={event?.data?.note} />
-                  </>
-                ) : null}
               </Stack>
             </Paper>
             <Center my={48}>

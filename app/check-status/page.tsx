@@ -20,6 +20,7 @@ import {
   Text,
   TextInput,
   em,
+  rem,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
@@ -52,158 +53,150 @@ export default function CheckResult() {
   };
 
   return (
-    <Box h="screen">
-      <Grid>
-        <Grid.Col
-          span={6}
-          h="100vh"
-          style={{
-            display: `${isMobile ? "none" : "block"}`,
-          }}
-        >
-          {home?.desktop_photo ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
-              alt="hero"
-              h={"100%"}
-            />
-          ) : (
-            <Box h={"100%"} bg="gray" />
-          )}
-        </Grid.Col>
-        <Grid.Col span={isMobile ? 12 : 6} px={24} pt={24}>
-          <Affix position={{ bottom: 20, right: 20 }}>
+    <Grid p={0} m={0}>
+      <Grid.Col
+        span={6}
+        h="100vh"
+        p={0}
+        m={0}
+        style={{
+          display: `${isMobile ? "none" : "block"}`,
+        }}
+      >
+        {home?.desktop_photo ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.desktop_photo}`}
+            alt="hero"
+            h={"100%"}
+          />
+        ) : (
+          <Box h={"100%"} bg="gray" />
+        )}
+      </Grid.Col>
+      <Grid.Col span={isMobile ? 12 : 6} px={24} py={24}>
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <ActionIcon
+            variant="filled"
+            color="green.5"
+            radius="xl"
+            size={60}
+            component={Link}
+            href="https://wa.me/+6285815330595"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconBrandWhatsapp size={48} />
+          </ActionIcon>
+        </Affix>
+        <Stack gap={48} justify="center" align="stretch" h={"100%"}>
+          <Flex justify="space-between" w="100%" mb={24}>
+            <Text size="xl" c="brand.9">
+              GARUDA NUSA
+            </Text>
             <ActionIcon
-              variant="filled"
-              color="green.5"
-              radius="xl"
-              size={60}
+              variant="transparent"
+              color="brand.9"
               component={Link}
-              href="https://wa.me/+6285815330595"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/login"
             >
-              <IconBrandWhatsapp size={48} />
+              <IconUserCircle />
             </ActionIcon>
-          </Affix>
-          <Stack gap={48} justify="center" align="stretch" h={"100%"}>
-            <Flex justify="space-between" w="100%" mb={24}>
-              <Text size="xl" c="brand.9">
-                GARUDA NUSA
-              </Text>
-              <ActionIcon
-                variant="transparent"
-                color="brand.9"
-                component={Link}
-                href="/login"
-              >
-                <IconUserCircle />
-              </ActionIcon>
-            </Flex>
-            <Flex h={isMobile ? "80%" : "70%"}>
-              <Card
-                p={28}
-                withBorder
+          </Flex>
+          <Flex h={isMobile ? "80%" : "70%"}>
+            <Card p={28} withBorder w="100%" radius="lg">
+              <Stack
                 w="100%"
-                radius="lg"
-                style={{
-                  overflowY: "auto",
-                }}
+                h="100%"
+                justify="center"
+                align="center"
+                gap={rem(40)}
+                py={rem(40)}
               >
-                <Stack
-                  w="100%"
-                  h="100%"
-                  justify="center"
-                  align="center"
-                  gap={40}
-                  my={48}
-                >
-                  <Flex justify="space-between" w="100%">
+                <Flex justify="space-between" w="100%">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="logo"
+                    maw={isMobile ? 150 : 200}
+                    fit="contain"
+                  />
+                  {home?.mobile_photo ? (
                     <Image
-                      src="/assets/logo.png"
-                      alt="logo"
-                      maw={isMobile ? 150 : 200}
+                      src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.mobile_photo}`}
+                      alt="Logo Kegiatan"
+                      maw={isMobile ? 80 : 100}
                       fit="contain"
                     />
-                    {home?.mobile_photo ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.mobile_photo}`}
-                        alt="Logo Kegiatan"
-                        maw={isMobile ? 80 : 100}
-                        fit="contain"
-                      />
-                    ) : (
-                      <Box h={"100%"} maw={100} bg="gray" />
-                    )}
-                  </Flex>
-                  <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
-                    {home?.event_name}
-                  </Text>
+                  ) : (
+                    <Box h={"100%"} maw={100} bg="gray" />
+                  )}
+                </Flex>
+                <Text c="brand.9" size="xl" fw="bold" ta="center" maw={400}>
+                  {home?.event_name}
+                </Text>
 
-                  <Center>
-                    <Stack justify="center" align="center" gap={40}>
-                      <Paper bg="teal.1" p="lg" radius={12}>
-                        <Text
-                          c="orange.8"
-                          size="xl"
-                          fw="bolder"
-                          ta="center"
-                          tt="uppercase"
-                        >
-                          CEK STATUS KELOLOSAN ANDA SEKARANG!
-                        </Text>
-                        <Text
-                          c="teal.8"
-                          size="xl"
-                          fw="bolder"
-                          ta="center"
-                          tt="uppercase"
-                        >
-                          MASUKKAN NOMOR HP YANG ANDA GUNAKAN SAAT MENGISI
-                          FORMULIR PENDAFTARAN
-                        </Text>
-                        <Text
-                          c="orange.8"
-                          size="xl"
-                          fw="bolder"
-                          ta="center"
-                          tt="uppercase"
-                        >
-                          CERMATI PETUNJUK YANG TERTERA!
-                        </Text>
-                      </Paper>
-                      <TextInput
-                        radius="xl"
-                        variant="filled"
-                        w="100%"
+                <Center>
+                  <Stack justify="center" align="center" gap={rem(40)}>
+                    <Paper bg="teal.1" p="lg" radius={12}>
+                      <Text
+                        c="orange.8"
                         size="xl"
-                        placeholder="No Hp:08123456789"
-                        error={form.errors.numberPhone}
-                        key={form.key("numberPhone")}
-                        {...form.getInputProps("numberPhone")}
-                      />
-                      <Button
-                        variant="filled"
-                        color="brand.9"
-                        size="lg"
-                        radius="xl"
-                        fullWidth={isMobile}
-                        disabled={!isPastDate}
-                        onClick={() => {
-                          form.onSubmit(handleSubmit)();
-                        }}
+                        fw="bolder"
+                        ta="center"
+                        tt="uppercase"
                       >
-                        CEK STATUS KELOLOSAN
-                      </Button>
-                    </Stack>
-                  </Center>
-                </Stack>
-              </Card>
-            </Flex>
-            <HomeFooter headerFooterName={home?.header_footer_name} />
-          </Stack>
-        </Grid.Col>
-      </Grid>
-    </Box>
+                        CEK STATUS KELOLOSAN ANDA SEKARANG!
+                      </Text>
+                      <Text
+                        c="teal.8"
+                        size="xl"
+                        fw="bolder"
+                        ta="center"
+                        tt="uppercase"
+                      >
+                        MASUKKAN NOMOR HP YANG ANDA GUNAKAN SAAT MENGISI
+                        FORMULIR PENDAFTARAN
+                      </Text>
+                      <Text
+                        c="orange.8"
+                        size="xl"
+                        fw="bolder"
+                        ta="center"
+                        tt="uppercase"
+                      >
+                        CERMATI PETUNJUK YANG TERTERA!
+                      </Text>
+                    </Paper>
+                    <TextInput
+                      radius="xl"
+                      variant="filled"
+                      w="100%"
+                      size="xl"
+                      placeholder="No Hp:08123456789"
+                      error={form.errors.numberPhone}
+                      key={form.key("numberPhone")}
+                      {...form.getInputProps("numberPhone")}
+                    />
+                    <Button
+                      variant="filled"
+                      color="brand.9"
+                      size="lg"
+                      radius="xl"
+                      fullWidth={isMobile}
+                      disabled={!isPastDate}
+                      onClick={() => {
+                        form.onSubmit(handleSubmit)();
+                      }}
+                    >
+                      CEK STATUS KELOLOSAN
+                    </Button>
+                  </Stack>
+                </Center>
+              </Stack>
+            </Card>
+          </Flex>
+          <HomeFooter headerFooterName={home?.header_footer_name} />
+        </Stack>
+      </Grid.Col>
+    </Grid>
   );
 }

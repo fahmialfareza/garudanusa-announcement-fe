@@ -13,6 +13,7 @@ import { useAuthStore } from "@/store/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 export const useGetUser = () => {
@@ -23,14 +24,15 @@ export const useGetUser = () => {
       queryKey: ["getCurrentUser"],
       retry: 0,
       queryFn: getCurrentUser,
-      meta: {
-        onerror: () => {
-          setToken(null);
-          localStorage.clear();
-          router.push("/login");
-        },
-      },
     });
+
+  useEffect(() => {
+    if (isError) {
+      setToken(null);
+      localStorage.clear();
+      router.push("/login");
+    }
+  }, [isError]);
 
   return {
     user: data,
