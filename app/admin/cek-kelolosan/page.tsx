@@ -50,15 +50,7 @@ export default function AdminCheckResult() {
       <AdminHeader />
       <Stack gap={48} justify="center" align="stretch" h={"100%"}>
         <Flex h="70%">
-          <Card
-            p={28}
-            withBorder
-            w="100%"
-            radius="lg"
-            style={{
-              overflowY: "auto",
-            }}
-          >
+          <Card p={28} withBorder w="100%" radius="lg">
             <Stack
               w="100%"
               h="100%"
