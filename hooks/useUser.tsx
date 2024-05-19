@@ -28,6 +28,8 @@ export const useGetUser = () => {
 
   useEffect(() => {
     if (isError) {
+      toast.dismiss();
+      toast.loading("Logging out ...");
       setToken(null);
       localStorage.clear();
       router.push("/login");
