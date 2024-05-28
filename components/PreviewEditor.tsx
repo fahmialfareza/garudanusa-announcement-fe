@@ -23,7 +23,14 @@ const PreviewEditor = ({ content }: PreviewEditorProps) => {
     extensions: [
       StarterKit,
       Underline,
-      Link,
+      Link.configure({
+        openOnClick: true,
+        HTMLAttributes: {
+          target: "_blank",
+          rel: "noopener",
+          style: "cursor: pointer; text-decoration: underline;",
+        },
+      }),
       Superscript,
       SubScript,
       Highlight,
@@ -32,7 +39,6 @@ const PreviewEditor = ({ content }: PreviewEditorProps) => {
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Image.configure({
         inline: true,
-        allowBase64: true,
       }),
     ],
     content,

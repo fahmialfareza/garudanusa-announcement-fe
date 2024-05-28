@@ -98,7 +98,7 @@ export default function Home() {
                     <Image
                       src={`${process.env.NEXT_PUBLIC_IMAGE}${home?.mobile_photo}`}
                       alt="Logo Kegiatan"
-                      maw={isMobile ? 80 : 100}
+                      maw={isMobile ? 100 : 200}
                       fit="contain"
                     />
                   ) : (
