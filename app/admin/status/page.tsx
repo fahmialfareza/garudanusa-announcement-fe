@@ -73,6 +73,7 @@ const StatusSettingsPage = () => {
                 <Badge size="xl" px={20} py={20} color={data.color}>
                   {data.status}
                 </Badge>
+                <Text fw={"bold"}>Status ID : {data.id}</Text>
                 <Group gap={16}>
                   <ActionIcon
                     size="xl"
