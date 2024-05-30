@@ -39,12 +39,18 @@ export const exportPDF = async ({
     });
 
     // Apply document padding
-    const padding = 0; // 1 cm in mm
+    const padding = 10; // 10 mm padding
     const pageWidth = pdf.internal.pageSize.getWidth() - 2 * padding;
     const pageHeight = pdf.internal.pageSize.getHeight() - 2 * padding;
     const widthRatio = pageWidth / canvas.width;
     const heightRatio = pageHeight / canvas.height;
     const ratio = Math.min(widthRatio, heightRatio);
+
+    // Calculate the centered position
+    const canvasWidth = canvas.width * ratio;
+    const canvasHeight = canvas.height * ratio;
+    const x = (pdf.internal.pageSize.getWidth() - canvasWidth) / 2;
+    const y = (pdf.internal.pageSize.getHeight() - canvasHeight) / 2;
 
     // Add background color
     pdf.setFillColor(255, 255, 255);
@@ -56,15 +62,8 @@ export const exportPDF = async ({
       "F"
     );
 
-    // Add the canvas image to PDF with padding
-    pdf.addImage(
-      imgData,
-      "PNG",
-      padding,
-      padding,
-      canvas.width * ratio,
-      canvas.height * ratio
-    );
+    // Add the canvas image to PDF centered
+    pdf.addImage(imgData, "PNG", x, y, canvasWidth, canvasHeight);
 
     // Save the PDF
     pdf.save(fileName);
