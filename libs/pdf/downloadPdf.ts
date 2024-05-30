@@ -27,7 +27,6 @@ export const exportPDF = async ({
       backgroundColor: "#FFFFFF",
       scale: 1,
       useCORS: true, // Helpful if your component contains images from external sources
-      proxy: "https://cors-anywhere.herokuapp.com/",
     });
 
     const imgData = canvas.toDataURL("image/png");
