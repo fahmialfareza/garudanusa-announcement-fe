@@ -6,7 +6,6 @@ import {
   useDeleteAnnouncement,
   useGetAnnouncement,
 } from "@/hooks/useAnnouncement";
-import { useGetStatus } from "@/hooks/useStatus";
 import { UpdateAnnouncementPayload } from "@/services/announcement/announcement";
 import {
   Badge,
@@ -36,7 +35,6 @@ import { useState } from "react";
 
 const DataRegistrantPage = () => {
   useDocumentTitle("GARUDA NUSA | Admin Data Pendaftar");
-  const { status, isLoading: isStatusLoading } = useGetStatus();
   const [displayCount, setDisplayCount] = useState("50");
   const [activePage, setPage] = useState(1);
   const { announcement, isLoading: isAnnouncementLoading } =
@@ -95,19 +93,21 @@ const DataRegistrantPage = () => {
   const filterAnnouncement = announcement?.data.filter((item) => {
     const searchTerm = debouncedSearchTerm.toLowerCase();
     const itemValues = [
-      item.name.toLowerCase(),
-      item.phone.toLowerCase(),
-      item.city_of_birth.toLowerCase(),
-      item.address_from.toLowerCase(),
-      item.school.toLowerCase(),
+      item.name?.toLowerCase() ?? "",
+      item.phone?.toLowerCase() ?? "",
+      item.city_of_birth?.toLowerCase() ?? "",
+      item.address_from?.toLowerCase() ?? "",
+      item.school?.toLowerCase() ?? "",
       item.date_of_birth
         ? new Date(item.date_of_birth).toLocaleDateString()
         : "",
-      item.status_id?.toString() ?? "",
       item.total_score?.toString() ?? "",
     ];
 
-    return itemValues.some((value) => value.includes(searchTerm));
+    return (
+      itemValues.some((value) => value.includes(searchTerm)) ||
+      item.status?.status?.toLowerCase() == searchTerm
+    );
   });
 
   const data = chunk(filterAnnouncement, parseInt(displayCount))[
@@ -136,20 +136,8 @@ const DataRegistrantPage = () => {
       <Table.Td>{item.address_from}</Table.Td>
       <Table.Td>{item.school}</Table.Td>
       <Table.Td>
-        <Badge
-          w="100%"
-          size="md"
-          color={
-            status?.data?.find(
-              (status) => status.id.toString() === item.status_id
-            )?.color
-          }
-        >
-          {
-            status?.data?.find(
-              (status) => status.id.toString() === item.status_id
-            )?.status
-          }
+        <Badge w="100%" size="md" color={item.status.color}>
+          {item.status.status}
         </Badge>
       </Table.Td>
     </Table.Tr>
@@ -215,7 +203,7 @@ const DataRegistrantPage = () => {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
-                {isStatusLoading || isAnnouncementLoading ? rowsLoading : rows}
+                {isAnnouncementLoading ? rowsLoading : rows}
               </Table.Tbody>
               <Table.Caption>Data Pendaftar</Table.Caption>
             </Table>

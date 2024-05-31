@@ -1,4 +1,5 @@
 import axiosInstance from "@/services/api";
+import { DataStatus } from "@/services/status/status";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -20,9 +21,7 @@ export interface Data {
   created_at: Date;
   updated_at: Date;
   deleted_at: null;
-  status: string;
-  message: string;
-  color: string;
+  status: DataStatus;
 }
 
 export interface CheckStatusPayload {
@@ -48,6 +47,7 @@ export interface DataAnnouncement {
   updated_at: Date;
   deleted_at: null;
   number: number;
+  status: DataStatus;
 }
 
 export interface Link {

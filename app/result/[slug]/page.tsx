@@ -211,18 +211,20 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
                     <Badge
                       variant="filled"
                       size="xl"
-                      color={status?.data?.color}
+                      color={status?.data?.status?.color}
                       radius="xs"
                       px={40}
                       py={20}
                     >
-                      {status?.data?.status}
+                      {status?.data?.status?.status}
                     </Badge>
                   </Center>
                   <Stack gap={24}>
                     {!isLoading ? (
                       <>
-                        <PreviewEditor content={status?.data?.message} />
+                        <PreviewEditor
+                          content={status?.data?.status?.message}
+                        />
                         <PreviewEditor content={event?.data?.note} />
                       </>
                     ) : null}
