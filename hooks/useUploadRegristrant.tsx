@@ -1,5 +1,5 @@
 import axiosInstance from "@/services/api";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -12,6 +12,7 @@ interface Args {
 
 export const useFileUpload = () => {
   const [progress, setProgress] = useState(0);
+  const queryClient = useQueryClient();
 
   const uploadFile = async (args: Args): Promise<void> => {
     const formData = new FormData();
@@ -43,6 +44,7 @@ export const useFileUpload = () => {
     onSuccess: () => {
       toast.dismiss();
       toast.success("File uploaded successfully");
+      queryClient.invalidateQueries({ queryKey: ["getAnnouncement"] });
     },
     onError: (error) => {
       toast.dismiss();
