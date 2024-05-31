@@ -145,8 +145,7 @@ const Login = () => {
                   fw="bold"
                   c="brand.9"
                 >
-                  GARUDA NUSA YOUTH ACTION (GNYA) #9 LABUAN BAJOPENGUMUMAN
-                  SELEKSI SUBSTANSI © {dayjs().format("YYYY")}
+                  {event?.data?.event_name}
                 </Text>
               </Center>
             </Stack>

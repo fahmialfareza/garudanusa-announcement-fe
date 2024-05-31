@@ -232,7 +232,7 @@ const DataRegistrantPage = () => {
                 radius="xl"
                 onClick={clickDeleteData}
               >
-                Delete Semua Data
+                Hapus Semua Data
               </Button>
               <Flex align="center" gap={24} mt={24}>
                 <Select
