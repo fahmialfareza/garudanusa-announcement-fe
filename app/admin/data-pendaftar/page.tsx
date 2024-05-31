@@ -2,13 +2,19 @@
 
 import UpdateAnnouncementModal from "@/app/admin/data-pendaftar/UpdateAnnouncementModal";
 import AdminHeader from "@/components/AdminHeader";
-import { useGetAnnouncement } from "@/hooks/useAnnouncement";
+import {
+  useDeleteAnnouncement,
+  useGetAnnouncement,
+} from "@/hooks/useAnnouncement";
 import { useGetStatus } from "@/hooks/useStatus";
 import { UpdateAnnouncementPayload } from "@/services/announcement/announcement";
 import {
   Badge,
+  Box,
+  Button,
   Divider,
   Flex,
+  Modal,
   Pagination,
   Paper,
   Select,
@@ -35,6 +41,11 @@ const DataRegistrantPage = () => {
   const [activePage, setPage] = useState(1);
   const { announcement, isLoading: isAnnouncementLoading } =
     useGetAnnouncement();
+
+  const { deleteAllAnnouncement, isLoading } = useDeleteAnnouncement();
+
+  const [deleteOpen, { open: clickDeleteData, close: closeDeleteData }] =
+    useDisclosure(false);
 
   const form = useForm({
     mode: "uncontrolled",
@@ -208,25 +219,41 @@ const DataRegistrantPage = () => {
               </Table.Tbody>
               <Table.Caption>Data Pendaftar</Table.Caption>
             </Table>
-            <Flex justify="flex-end" w="100%" align="center" gap={24} mt={24}>
-              <Select
-                w="100px"
-                value={displayCount}
-                onChange={(value) => setDisplayCount(value as string)}
-                data={[
-                  { value: "50", label: "50" },
-                  { value: "100", label: "100" },
-                  { value: "200", label: "200" },
-                  { value: "300", label: "300" },
-                  { value: "400", label: "400" },
-                  { value: "500", label: "500" },
-                ]}
-              />
-              <Pagination
-                total={data?.length}
-                value={activePage}
-                onChange={setPage}
-              />
+            <Flex
+              justify="space-between"
+              w="100%"
+              align="center"
+              gap={24}
+              mt={24}
+            >
+              <Button
+                color="red.9"
+                variant="filled"
+                radius="xl"
+                onClick={clickDeleteData}
+              >
+                Delete Semua Data
+              </Button>
+              <Flex align="center" gap={24} mt={24}>
+                <Select
+                  w="100px"
+                  value={displayCount}
+                  onChange={(value) => setDisplayCount(value as string)}
+                  data={[
+                    { value: "50", label: "50" },
+                    { value: "100", label: "100" },
+                    { value: "200", label: "200" },
+                    { value: "300", label: "300" },
+                    { value: "400", label: "400" },
+                    { value: "500", label: "500" },
+                  ]}
+                />
+                <Pagination
+                  total={data?.length}
+                  value={activePage}
+                  onChange={setPage}
+                />
+              </Flex>
             </Flex>
           </Table.ScrollContainer>
         </Stack>
@@ -236,6 +263,38 @@ const DataRegistrantPage = () => {
           closeUpdateAnnouncement={closeEditAnnouncement}
           payload={selectedAnnouncement}
         />
+        <Modal
+          opened={deleteOpen}
+          onClose={closeDeleteData}
+          title={`Hapus Semua Data Pendaftar`}
+          centered
+        >
+          <Stack gap={24}>
+            <Text fw="bolder" fz={24}>
+              Yakin Ingin Menghapus Semua Data Pendaftar?
+            </Text>
+            <Flex justify="end">
+              <Button
+                variant="transparent"
+                c="brand.9"
+                onClick={closeDeleteData}
+              >
+                Batal
+              </Button>
+              <Button
+                color="red.9"
+                variant="filled"
+                radius="xl"
+                onClick={() => {
+                  deleteAllAnnouncement();
+                  closeDeleteData();
+                }}
+              >
+                Hapus
+              </Button>
+            </Flex>
+          </Stack>
+        </Modal>
       </Paper>
     </>
   );

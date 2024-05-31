@@ -3,6 +3,7 @@ import {
   GetAnnouncementParams,
   GetAnnouncementResponse,
   UpdateAnnouncementPayload,
+  deleteAnnouncement,
   getAnnouncement,
   updateAnnouncement,
 } from "@/services/announcement/announcement";
@@ -53,6 +54,35 @@ export const useUpdateAnnouncement = () => {
 
   return {
     updateAnnouncement: mutate,
+    isLoading: isPending,
+    isError: isError,
+    error: error,
+    isSuccess: isSuccess,
+  };
+};
+
+export const useDeleteAnnouncement = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending, isError, error, isSuccess } =
+    useMutation<AxiosError>({
+      mutationFn: deleteAnnouncement,
+      onMutate: async () => {
+        toast.loading("Deleting...");
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["getAnnouncement"] });
+        toast.dismiss();
+        toast.success("Announcement deleted successfully");
+      },
+      onError: (error: any) => {
+        toast.dismiss();
+        const dataError = error.response?.data as AxiosErrorResponse; // Handling potential undefined response
+        toast.error(dataError?.message || "Failed to delete announcement");
+      },
+    });
+
+  return {
+    deleteAllAnnouncement: mutate,
     isLoading: isPending,
     isError: isError,
     error: error,

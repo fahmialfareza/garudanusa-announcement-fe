@@ -140,3 +140,16 @@ export const updateAnnouncement = async ({
     throw new Error("An unexpected error occurred");
   }
 };
+
+export const deleteAnnouncement = async (): Promise<any> => {
+  try {
+    const response = await axiosInstance.delete("announcement/delete");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data.message);
+      throw error;
+    }
+    throw new Error("An unexpected error occurred");
+  }
+};
