@@ -27,7 +27,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { IconBrandWhatsapp, IconUserCircle } from "@tabler/icons-react";
 
 export default function CheckResult() {
-  const { event, isPastDate } = useGetEvent();
+  const { event, isPastDate } = useGetEvent(true);
   const home = event?.data;
   const { checkStatus } = useCheckStatus(false);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);

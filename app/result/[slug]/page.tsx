@@ -32,7 +32,7 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
   const { checkStatus, isLoading, status, isError } = useCheckStatus(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const { event } = useGetEvent();
+  const { event } = useGetEvent(true);
   const router = useRouter();
 
   function setViewportMetaTag(): string {

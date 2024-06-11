@@ -21,7 +21,7 @@ import { useDocumentTitle } from "@mantine/hooks";
 
 export default function AdminCheckResult() {
   useDocumentTitle("Admin | Cek Kelolosan");
-  const { event } = useGetEvent();
+  const { event } = useGetEvent(true);
   const home = event?.data;
   const { checkStatus, status } = useCheckStatus(false);
 

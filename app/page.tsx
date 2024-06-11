@@ -23,7 +23,7 @@ import { IconBrandWhatsapp, IconUserCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export default function Home() {
-  const { event, isLoading, isPastDate } = useGetEvent();
+  const { event, isLoading, isPastDate } = useGetEvent(true);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const home = event?.data;

@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const { submitAnnouncement } = useSubmitAnnouncement();
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
-  const { event, isLoading } = useGetEvent();
+  const { event, isLoading } = useGetEvent(true);
 
   const form = useForm<Partial<AnnouncementArgs["data"]>>({
     initialValues: {

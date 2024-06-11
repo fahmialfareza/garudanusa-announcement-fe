@@ -28,7 +28,7 @@ const Login = () => {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
   const router = useRouter();
   useDocumentTitle("GARUDA NUSA | Login");
-  const { event, isPastDate } = useGetEvent();
+  const { event, isPastDate } = useGetEvent(true);
   const home = event?.data;
 
   const { login, isLoading, isError, error } = useLogin();

@@ -6,7 +6,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 
 const AdminHeader = () => {
-  const { event, isLoading } = useGetEvent();
+  const { event, isLoading } = useGetEvent(true);
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   return (
