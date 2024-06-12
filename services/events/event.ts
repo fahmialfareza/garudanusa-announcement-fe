@@ -14,7 +14,7 @@ export interface Data {
   mobile_photo: string;
   header_footer_name: string;
   selection_phase: string;
-  date: Date | string;
+  date: Date;
   note: string;
   created_at: Date;
   updated_at: Date;
