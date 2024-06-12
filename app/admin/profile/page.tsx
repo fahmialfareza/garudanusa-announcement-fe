@@ -191,7 +191,7 @@ const ProfilePage = () => {
             {...form.getInputProps("header_footer_name")}
           />
           <DateTimePicker
-            valueFormat="DD MMM YYYY hh:mm WIB"
+            valueFormat="DD MMM YYYY HH:mm WIB"
             label="Tanggal Pengumuman"
             withAsterisk
             radius="lg"
