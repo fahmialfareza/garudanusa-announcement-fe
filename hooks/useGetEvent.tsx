@@ -31,6 +31,7 @@ export const useGetEvent = (convertDate?: boolean) => {
 };
 
 function convertToUTC(date: string): Date {
+  date = date?.replace(/-/g, "/");
   // Regular expression to check if the date string is in GMT+7
   const gmt7Regex = /GMT\+0700/;
 
