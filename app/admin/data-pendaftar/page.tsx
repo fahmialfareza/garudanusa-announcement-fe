@@ -93,20 +93,20 @@ const DataRegistrantPage = () => {
   const filterAnnouncement = announcement?.data.filter((item) => {
     const searchTerm = debouncedSearchTerm.toLowerCase();
     const itemValues = [
-      item.name?.toLowerCase() ?? "",
-      item.phone?.toLowerCase() ?? "",
-      item.city_of_birth?.toLowerCase() ?? "",
-      item.address_from?.toLowerCase() ?? "",
-      item.school?.toLowerCase() ?? "",
-      item.date_of_birth
-        ? new Date(item.date_of_birth).toLocaleDateString()
+      item?.name?.toLowerCase() ?? "",
+      item?.phone?.toLowerCase() ?? "",
+      item?.city_of_birth?.toLowerCase() ?? "",
+      item?.address_from?.toLowerCase() ?? "",
+      item?.school?.toLowerCase() ?? "",
+      item?.date_of_birth
+        ? new Date(item?.date_of_birth).toLocaleDateString()
         : "",
-      item.total_score?.toString() ?? "",
+      item?.total_score?.toString() ?? "",
     ];
 
     return (
       itemValues.some((value) => value.includes(searchTerm)) ||
-      item.status?.status?.toLowerCase() == searchTerm
+      item?.status?.status?.toLowerCase() == searchTerm
     );
   });
 
@@ -116,28 +116,28 @@ const DataRegistrantPage = () => {
 
   const rows = data?.map((item) => (
     <Table.Tr
-      key={item.id}
+      key={item?.id}
       style={{ cursor: "pointer" }}
       onClick={() => {
         setSelectedAnnouncement({
           ...item,
-          total_score: parseInt(item.total_score),
-          status_id: parseInt(item.status_id),
+          total_score: parseInt(item?.total_score),
+          status_id: parseInt(item?.status_id),
         });
         clickEditAnnouncement();
       }}
     >
-      <Table.Td>{item.number}</Table.Td>
-      <Table.Td>{item.name}</Table.Td>
-      <Table.Td>{item.phone}</Table.Td>
+      <Table.Td>{item?.number}</Table.Td>
+      <Table.Td>{item?.name}</Table.Td>
+      <Table.Td>{item?.phone}</Table.Td>
       <Table.Td>
-        {item.city_of_birth}, {item.date_of_birth}
+        {item?.city_of_birth}, {item?.date_of_birth}
       </Table.Td>
-      <Table.Td>{item.address_from}</Table.Td>
-      <Table.Td>{item.school}</Table.Td>
+      <Table.Td>{item?.address_from}</Table.Td>
+      <Table.Td>{item?.school}</Table.Td>
       <Table.Td>
-        <Badge w="100%" size="md" color={item.status.color}>
-          {item.status.status}
+        <Badge w="100%" size="md" color={item?.status?.color}>
+          {item?.status?.status}
         </Badge>
       </Table.Td>
     </Table.Tr>
