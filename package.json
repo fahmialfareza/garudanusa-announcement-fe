@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@mantine/colors-generator": "^7.8.1",
@@ -18,6 +21,7 @@
     "@mantine/modals": "^7.8.1",
     "@mantine/notifications": "^7.8.1",
     "@mantine/tiptap": "^7.8.1",
+    "@opennextjs/cloudflare": "^1.14.8",
     "@tabler/icons-react": "^3.2.0",
     "@tanstack/react-query": "^5.32.0",
     "@tanstack/react-query-devtools": "^5.32.0",
@@ -54,6 +58,7 @@
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.15.0",
     "postcss-simple-vars": "^7.0.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.57.0"
   }
 }
