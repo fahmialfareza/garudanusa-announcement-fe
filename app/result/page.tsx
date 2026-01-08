@@ -1,4 +1,7 @@
 "use client";
+
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import PreviewEditor from "@/components/PreviewEditor";
 import { useCheckStatus } from "@/hooks/useCheckStatus";
 import { useGetEvent } from "@/hooks/useGetEvent";
@@ -26,8 +29,11 @@ import { IconArrowNarrowLeft, IconFileDownload } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-const ResultPage = ({ params }: { params: { slug: string } }) => {
-  useDocumentTitle(`GARUDA NUSA | Results(${params.slug})`);
+const ResultPage = () => {
+  const searchParams = useSearchParams();
+  const phone = searchParams.get("phone");
+
+  useDocumentTitle(`GARUDA NUSA | Results(${phone})`);
 
   const { checkStatus, isLoading, status, isError } = useCheckStatus(true);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -66,13 +72,13 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
   }, []);
 
   useEffect(() => {
-    if (params.slug) {
+    if (phone) {
       checkStatus({
-        numberPhone: params.slug,
+        numberPhone: phone,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.slug]);
+  }, [phone]);
 
   const handleDownloadPdf = () => {
     if (contentRef.current) {
@@ -270,4 +276,16 @@ const ResultPage = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default ResultPage;
+export default function ResultPageWrapper() {
+  return (
+    <Suspense
+      fallback={
+        <Center>
+          <Loader size="lg" color="brand.9" />
+        </Center>
+      }
+    >
+      <ResultPage />
+    </Suspense>
+  );
+}

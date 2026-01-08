@@ -27,7 +27,7 @@ export const useCheckStatus = (isParams: boolean) => {
       if (!isParams) {
         toast.success("Data ditemukan");
       }
-      router.push("/result/" + data.data.phone);
+      router.push("/result?phone=" + data.data.phone);
     },
     onError: (error) => {
       toast.dismiss();
